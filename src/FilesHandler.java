@@ -11,42 +11,99 @@ public class FilesHandler {
     private String separator = FileSystems.getDefault().getSeparator();
 
     public FilesHandler(String aFileName) throws IOException {
-        fileName = aFileName;
+        //set value of this.fileName
+        setFileName(aFileName);
 
-        boolean fileExists = exists(aFileName);
+        //create the user directory if it does not exist, if the directory is successfully created or already exists, this return true
+        String userDirectoryPath = createUserDirectory(); // returning "" means the failure of creation
 
+        if (userDirectoryPath != "") { // if the user directory exists, then create the file
+            String aFilePath = createFileInUserDirectory(aFileName); // returning "" means the failure of creation
+            if (aFilePath != ""){
+                filePath = aFilePath;
+            } else {
+                throw new IOException("Could not create the file in the user directory");
+            }
+        } else {
+            throw new IOException("Could not create the user directory");
+        }
+
+    }
+
+    private String createFileInUserDirectory(String aFileName) throws IOException {
+        if (existsUserDirectory()) {
+            //composite the file path from strings
+            Path aFilePath = Paths.get(getUserDirectoryPath(), aFileName);
+
+            if (!Files.exists(aFilePath)) {
+                try {
+                    aFilePath = Files.createFile(aFilePath);
+                    return aFilePath.toString();
+                } catch (IOException e) {
+                    return "";
+                }
+            } else {
+                return aFilePath.toString();
+            }
+
+        } else {
+            return "";
+        }
+    }
+
+    public boolean existsUserDirectory(){
         //The Current Directory
         String currentDirectory = System.getProperty("user.dir");
 
         //The new path for the tasks files
-        Path targetDirectoryPath = Paths.get(currentDirectory,"taskFiles");
+        Path userDirectoryPath = Paths.get(currentDirectory,"taskFiles");
 
-        Path targetFilePath;
-        if (fileExists){ // if the file exists just save the path to filePath
+        if (Files.exists(userDirectoryPath)) {
+            // if the user directory exists then return true
+            return true;
+        } else {
+            return false;
+        }
+    }
 
-            //The task file path
-            targetFilePath = Paths.get(targetDirectoryPath.toString(),aFileName);
+    public String getUserDirectoryPath(){
+        //The Current Directory
+        String currentDirectory = System.getProperty("user.dir");
 
-            filePath = targetFilePath.toString();
-        } else { // if the file does not exist create it first, then save the path to filePath
-            //Add the tasks directory if it does not exist yet
-            if (!Files.exists(targetDirectoryPath)) {
-                //The created directory
-                Path createdDirectory = Files.createDirectory(targetDirectoryPath);
+        //The new path for the tasks files
+        Path userDirectoryPath = Paths.get(currentDirectory,"taskFiles");
+
+        if (Files.exists(userDirectoryPath)) {
+            // if the user directory exists then return its path as String
+            return userDirectoryPath.toString();
+        } else {
+            return "";
+        }
+    }
+
+    private String createUserDirectory() {
+        //The Current Directory
+        String currentDirectory = System.getProperty("user.dir");
+
+        //The new path for the tasks files
+        Path userDirectoryPath = Paths.get(currentDirectory,"taskFiles");
+
+        if (!Files.exists(userDirectoryPath)) {
+            try {
+                //to create directory
+                Path createdDirectory = Files.createDirectory(userDirectoryPath);
+                return createdDirectory.toString();
+            } catch (IOException e){
+                return "";
             }
-
-            //The task file path
-            targetFilePath = Paths.get(targetDirectoryPath.toString(),aFileName);
-
-            if (!Files.exists(targetFilePath)) {
-                targetFilePath = Files.createFile(targetFilePath);
-                filePath = targetFilePath.toString();
-            }
-
+        } else {
+            return userDirectoryPath.toString();
         }
 
+    }
 
-
+    private void setFileName(String aFileName) {
+        this.fileName = aFileName;
     }
 
     public static List<String> getListOfFiles() throws IOException {

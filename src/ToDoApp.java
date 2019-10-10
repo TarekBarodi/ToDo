@@ -9,8 +9,6 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ToDoApp {
-    //ViewObj viewObj;
-    //TasksList tasks;
 
     public ToDoApp() {
 
@@ -18,14 +16,91 @@ public class ToDoApp {
 
     public static void main(String[] args) throws Exception {
         // user select an option to open the Tasks File
-        int intSelection = selectOpenFileOption();
+        int selectedOption = selectOpenFileOption();
 
+        //Create a tasksFile depending on the option selected: 1 for recent, 2 for existing, 3 for new file.
+        TasksFile tasksFile = createTaskFile(selectedOption);
+
+
+
+    }
+
+    public static int selectOpenFileOption() throws Exception {
+        boolean isOptionSelected = false;
+        int selectedOption = 0;
+        while (!isOptionSelected) {
+            ViewObj viewObj = new ViewObj();
+            viewObj.display("Welcome to ToDo List application");
+            viewObj.display("You can select one of the following:");
+            viewObj.display(1, colorTxt(TxtColor.YELLOW, "Open the ") + colorTxt(TxtColor.BLUE, "recent ") + colorTxt(TxtColor.YELLOW, "Tasks file."));
+            viewObj.display(2, colorTxt(TxtColor.YELLOW, "Open ") + colorTxt(TxtColor.BLUE, "another ") + colorTxt(TxtColor.YELLOW, "Tasks file."));
+            viewObj.display(3, colorTxt(TxtColor.YELLOW, "Open ") + colorTxt(TxtColor.BLUE, "new ") + colorTxt(TxtColor.YELLOW, "Tasks file."));
+            viewObj.display(0, colorTxt(TxtColor.YELLOW, "Escape "));
+            viewObj.display("Note: Enter the selection number 1 or 2 or 3, and press return!");
+
+            ControlObj controlObj = new ControlObj();
+            try {
+                selectedOption = controlObj.readCommandSelection(0,3);
+                isOptionSelected = true;
+            } catch (Exception e) {
+                throw new Exception("Failed to select an option to open file");
+            }
+
+
+        }
+        return selectedOption;
+    }
+
+    public static boolean isInteger(String txt){
+        try{
+            Integer.parseInt(txt);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public static String colorTxt(TxtColor txtColor, String txt){
+        String index = null;
+
+        switch (txtColor){
+            case BLACK:
+                index = "30";
+                break;
+            case RED:
+                index = "31";
+                break;
+            case GREEN:
+                index = "32";
+                break;
+            case YELLOW:
+                index = "33";
+                break;
+            case BLUE:
+                index = "34";
+                break;
+            case MAGENTA:
+                index = "35";
+                break;
+            case CYAN:
+                index = "36";
+                break;
+            case WHITE:
+                index = "37";
+                break;
+        }
+
+        return "\u001B[" + index + "m" + txt + "\u001B[" + 0 + "m";
+
+    }
+
+    public static TasksFile createTaskFile(int option) throws Exception {
         ViewObj viewObj = new ViewObj();
         ControlObj controlObj = new ControlObj();
         TasksFile tasksFile = null;
         String tasksFileName = "";
         LogFile logFile = new LogFile("logDoc.log");
-        switch (intSelection) {
+        switch (option) {
             case 0: // Escape
                 viewObj.display("Thank You, Good Luck!");
                 break;
@@ -74,118 +149,8 @@ public class ToDoApp {
 
         }
 
+        return tasksFile;
     }
 
-    public static int selectOpenFileOption() throws Exception {
-        boolean selected = false;
-        int selection = 0;
-        while (!selected) {
-            ViewObj viewObj = new ViewObj();
-            viewObj.display("Welcome to ToDo List application");
-            viewObj.display("You can select one of the following:");
-            viewObj.display(1, colorTxt(TxtColor.YELLOW, "Open the ") + colorTxt(TxtColor.BLUE, "recent ") + colorTxt(TxtColor.YELLOW, "Tasks file."));
-            viewObj.display(2, colorTxt(TxtColor.YELLOW, "Open ") + colorTxt(TxtColor.BLUE, "another ") + colorTxt(TxtColor.YELLOW, "Tasks file."));
-            viewObj.display(3, colorTxt(TxtColor.YELLOW, "Open ") + colorTxt(TxtColor.BLUE, "new ") + colorTxt(TxtColor.YELLOW, "Tasks file."));
-            viewObj.display(0, colorTxt(TxtColor.YELLOW, "Escape "));
-            viewObj.display("Note: Enter the selection number 1 or 2 or 3, and press return!");
 
-            ControlObj controlObj = new ControlObj();
-            try {
-                selection = controlObj.readCommandSelection(0,3);
-                selected = true;
-            } catch (Exception e) {
-                throw new Exception("Failed to select an option to open file");
-            }
-
-
-        }
-        return selection;
-    }
-
-    public static boolean isInteger(String txt){
-        try{
-            Integer.parseInt(txt);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
-    public static String colorTxt(TxtColor txtColor, String txt){
-        String index = null;
-
-        switch (txtColor){
-            case BLACK:
-                index = "30";
-                break;
-            case RED:
-                index = "31";
-                break;
-            case GREEN:
-                index = "32";
-                break;
-            case YELLOW:
-                index = "33";
-                break;
-            case BLUE:
-                index = "34";
-                break;
-            case MAGENTA:
-                index = "35";
-                break;
-            case CYAN:
-                index = "36";
-                break;
-            case WHITE:
-                index = "37";
-                break;
-        }
-
-        return "\u001B[" + index + "m" + txt + "\u001B[" + 0 + "m";
-
-    }
-
-    public static Path createNewTaskFile() throws IOException {
-        //The File System Separator
-        String separator = FileSystems.getDefault().getSeparator();
-
-        //The Current Directory
-        String currentDirectory = System.getProperty("user.dir");
-
-        //The new path for the tasks files
-        Path tasksDirectoryPath = Paths.get(currentDirectory,"taskFiles");
-
-        //Add the tasks directory if it does not exist yet
-        if (!Files.exists(tasksDirectoryPath)) {
-            //The created directory
-            Path createdDirectory = Files.createDirectory(tasksDirectoryPath);
-        }
-
-        //Read the tasks file name
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter the tasks file name:");
-        String newTaskFileName = scanner.nextLine();
-        newTaskFileName = newTaskFileName.replaceAll("\\s+","") + ".tsk";
-        System.out.println("The tasks file name is: " + newTaskFileName);
-
-        //The task file path
-        Path taskFilePath = Paths.get(tasksDirectoryPath.toString(),newTaskFileName);
-        System.out.println("The tasks file path is: " + taskFilePath);
-
-        if (!Files.exists(taskFilePath)) {
-            Files.createFile(taskFilePath);
-        }
-
-        return taskFilePath;
-    }
-
-    /**
-     * Create a file to contain all tasks in.
-     * Return type is TasksList.
-     * @param fileName
-     * @param filePath
-     */
-    /*public TasksList openNewTasksFile(String fileName, String filePath){
-
-    }*/
 }
