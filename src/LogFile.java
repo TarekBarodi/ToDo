@@ -29,10 +29,15 @@ public class LogFile  extends FilesHandler {
 
     }
 
-    public String readTasksFilePath() throws IOException {
-        String tasksFilePath = Files.readString(Paths.get(filePath));
-        return  tasksFilePath;
+    public String readTasksFilePath() {
+        try {
+            String tasksFilePath = Files.readString(Paths.get(filePath));
+            return tasksFilePath;
+        }  catch (IOException e) {
+            ViewObj viewObj = new ViewObj();
+            viewObj.display("LogFile.readTasksFilePath", "Failed to readString in Files class",e);
+            return "";
+        }
     }
-
 
 }
