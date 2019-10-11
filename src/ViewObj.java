@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.List;
 
 public class ViewObj {
@@ -23,5 +24,9 @@ public class ViewObj {
             counter++;
             System.out.println("(" + counter + ")" + "\t" + txt);
         }
+    }
+
+    public void display(String methodWhereLocated,String reason, Exception e) {
+        System.out.println("There is an Exception; /n Method: " + methodWhereLocated + "/n Reason: " + reason + "/n Exception Message: " + e.getMessage());
     }
 }

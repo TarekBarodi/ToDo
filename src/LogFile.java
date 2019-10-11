@@ -8,7 +8,7 @@ public class LogFile  extends FilesHandler {
     private String filePath;
     private String fileName;
 
-    public LogFile(String logFileName) throws IOException {
+    public LogFile(String logFileName) {
         super(logFileName);
         filePath = super.getFilePath();
         fileName = super.getFileName();

@@ -105,13 +105,7 @@ public class ToDoApp {
                 viewObj.display("Thank You, Good Luck!");
                 break;
             case 1: // Open the recent opened taskFile
-                tasksFileName = FilesHandler.getFileNameFromPath(logFile.readTasksFilePath());
-                if (TasksFile.exists(tasksFileName)){
-                    tasksFile = new TasksFile(tasksFileName);
-                } else {
-                    viewObj.display("There is no recent tasks file in the log file, opening process is failed, you can rerun the application and select another option");
-                    tasksFile = null;
-                }
+                tasksFile = openRecentTasksFile();
                 break;
             case 2: // Open an existing tasks file.
                 boolean selected = false;
@@ -150,6 +144,19 @@ public class ToDoApp {
         }
 
         return tasksFile;
+    }
+
+    private static TasksFile openRecentTasksFile() {
+        String tasksFileName = FilesHandler.getFileNameFromPath(logFile.readTasksFilePath());
+        TasksFile tasksFile = null;
+        if (TasksFile.exists(tasksFileName)){
+            tasksFile = new TasksFile(tasksFileName);
+        } else {
+            viewObj.display("There is no recent tasks file in the log file, opening process is failed, you can rerun the application and select another option");
+            tasksFile = null;
+        }
+        return tasksFile;
+
     }
 
 

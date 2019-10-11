@@ -10,27 +10,30 @@ public class FilesHandler {
 
     private String separator = FileSystems.getDefault().getSeparator();
 
-    public FilesHandler(String aFileName) throws IOException {
+    public FilesHandler(String aFileName) {
         //set value of this.fileName
         setFileName(aFileName);
 
         //create the user directory if it does not exist, if the directory is successfully created or already exists, this return true
         String userDirectoryPath = createUserDirectory(); // returning "" means the failure of creation
-
-        if (userDirectoryPath != "") { // if the user directory exists, then create the file
-            String aFilePath = createFileInUserDirectory(aFileName); // returning "" means the failure of creation
-            if (aFilePath != ""){
-                filePath = aFilePath;
+        try {
+            if (userDirectoryPath != "") { // if the user directory exists, then create the file
+                String aFilePath = createFileInUserDirectory(aFileName); // returning "" means the failure of creation
+                if (aFilePath != "") {
+                    filePath = aFilePath;
+                } else {
+                    throw new IOException("Could not create the file in the user directory");
+                }
             } else {
-                throw new IOException("Could not create the file in the user directory");
+                throw new IOException("Could not create the user directory");
             }
-        } else {
-            throw new IOException("Could not create the user directory");
+        } catch (IOException e) {
+            ViewObj viewObj = new ViewObj();
+            viewObj.display("FileHandler Constructor", "Could not create the user directory or a file in it.",e);
         }
-
     }
 
-    private String createFileInUserDirectory(String aFileName) throws IOException {
+    private String createFileInUserDirectory(String aFileName) {
         if (existsUserDirectory()) {
             //composite the file path from strings
             Path aFilePath = Paths.get(getUserDirectoryPath(), aFileName);
@@ -40,6 +43,8 @@ public class FilesHandler {
                     aFilePath = Files.createFile(aFilePath);
                     return aFilePath.toString();
                 } catch (IOException e) {
+                    ViewObj viewObj = new ViewObj();
+                    viewObj.display("FileHandler.createFileInUserDirectory", "Could not create a file", e);
                     return "";
                 }
             } else {
@@ -139,7 +144,7 @@ public class FilesHandler {
         return ListOfFileNames;
     }
 
-    public static boolean exists(String aFileName) throws IOException {
+    public static boolean exists(String aFileName) {
         //The Current Directory
         String currentDirectory = System.getProperty("user.dir");
 

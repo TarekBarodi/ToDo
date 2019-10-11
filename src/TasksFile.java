@@ -10,7 +10,7 @@ public class TasksFile extends FilesHandler {
     private String fileName;
 
 
-    public TasksFile(String tasksFileName) throws IOException {
+    public TasksFile(String tasksFileName) {
         super(tasksFileName);
         filePath = super.getFilePath();
         fileName = super.getFileName();
