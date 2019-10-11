@@ -19,6 +19,7 @@ public class ToDoApp {
         int selectedOption = selectOpenFileOption();
 
         //Create a tasksFile depending on the option selected: 1 for recent, 2 for existing, 3 for new file.
+        //including registering its path in the log file.
         TasksFile tasksFile = createTaskFile(selectedOption);
 
 
@@ -116,7 +117,12 @@ public class ToDoApp {
             case 3: // New Tasks File
                 tasksFile = openNewTasksFile();
                 break;
+        }
 
+        // If taskFile created successfully (which means there is file created on the device), then register its path
+        // in the log file.
+        if (tasksFile != null) {
+            logFile.registerTasksFile(tasksFile.getFilePath());
         }
 
         return tasksFile;
@@ -127,7 +133,6 @@ public class ToDoApp {
         ControlObj controlObj = new ControlObj();
         String tasksFileName = "";
         TasksFile tasksFile = null;
-        LogFile logFile = new LogFile("logDoc.log");
         boolean repeatedFileName = true;
         while (repeatedFileName) {
             viewObj.display("Enter the tasks file name:");
@@ -137,7 +142,6 @@ public class ToDoApp {
             } else { // initiated a tasksFile obj
                 repeatedFileName = false;
                 tasksFile = new TasksFile(tasksFileName);
-                logFile.registerTasksFile(tasksFile.getFilePath());
             }
         }
         return tasksFile;
@@ -149,7 +153,6 @@ public class ToDoApp {
         ControlObj controlObj = new ControlObj();
         String tasksFileName = "";
         TasksFile tasksFile = null;
-        LogFile logFile = new LogFile("logDoc.log");
         while (!selected) {
             viewObj.display("You can open one of the following task files:");
             List<String> listOfTaskFiles = FilesHandler.getListOfFiles("tsk");
@@ -161,7 +164,6 @@ public class ToDoApp {
                 tasksFileName = listOfTaskFiles.get(selectionOfTaskFile-1);
                 tasksFile = new TasksFile(tasksFileName);
                 selected = true;
-                logFile.registerTasksFile(tasksFile.getFilePath());
             } else {
                 viewObj.display(viewObj.colorTxt(TxtColor.RED,"There is a problem is selection number, you have to re-enter the index again."));
             }
