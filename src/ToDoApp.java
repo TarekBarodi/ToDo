@@ -114,22 +114,32 @@ public class ToDoApp {
                 tasksFile = openExistingTasksFile();
                 break;
             case 3: // New Tasks File
-                boolean repeatedFileName = true;
-                while (repeatedFileName) {
-                    viewObj.display("Enter the tasks file name:");
-                    tasksFileName = controlObj.readFileName();
-                    if (TasksFile.exists(tasksFileName)) {
-                        viewObj.display("There is a tasks file already exists, retype another name, please!");
-                    } else { // initiated a tasksFile obj
-                        repeatedFileName = false;
-                        tasksFile = new TasksFile(tasksFileName);
-                        logFile.registerTasksFile(tasksFile.getFilePath());
-                    }
-                }
+                tasksFile = openNewTasksFile();
                 break;
 
         }
 
+        return tasksFile;
+    }
+
+    private static TasksFile openNewTasksFile() {
+        ViewObj viewObj = new ViewObj();
+        ControlObj controlObj = new ControlObj();
+        String tasksFileName = "";
+        TasksFile tasksFile = null;
+        LogFile logFile = new LogFile("logDoc.log");
+        boolean repeatedFileName = true;
+        while (repeatedFileName) {
+            viewObj.display("Enter the tasks file name:");
+            tasksFileName = controlObj.readFileName();
+            if (TasksFile.exists(tasksFileName)) {
+                viewObj.display("There is a tasks file already exists, retype another name, please!");
+            } else { // initiated a tasksFile obj
+                repeatedFileName = false;
+                tasksFile = new TasksFile(tasksFileName);
+                logFile.registerTasksFile(tasksFile.getFilePath());
+            }
+        }
         return tasksFile;
     }
 
