@@ -14,7 +14,7 @@ public class LogFile  extends FilesHandler {
         fileName = super.getFileName();
     }
 
-    public void registerTasksFile(String tasksFilePath) throws IOException {
+    public void registerTasksFile(String tasksFilePath) {
         try {
             if (Files.isWritable(Paths.get(filePath)))  {
                 Files.write(Paths.get(filePath),tasksFilePath.getBytes());
@@ -23,7 +23,8 @@ public class LogFile  extends FilesHandler {
             }
 
         } catch (IOException e){
-            throw new IOException("The tasks file could not be registered in log file");
+            ViewObj viewObj = new ViewObj();
+            viewObj.display("LofFile.registerTasksFile","Failed to write to the log file.",e);
         }
 
 

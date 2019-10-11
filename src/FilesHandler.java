@@ -125,23 +125,28 @@ public class FilesHandler {
         return ListOfFileNames;
     }
 
-    public static List<String> getListOfFiles(String fileExtent) throws IOException {
+    public static List<String> getListOfFiles(String fileExtent) {
         DirectoryStream<Path> ListOfFiles;
         String currentDirectory = System.getProperty("user.dir");
-        ListOfFiles = Files.newDirectoryStream(Paths.get(currentDirectory,"taskFiles"), new DirectoryStream.Filter<Path>() {
-            @Override
-            public boolean accept(Path entry) throws IOException {
-                return entry.getFileName().toString().endsWith("." + fileExtent);
+        List<String> listOfFileNames = new ArrayList<>();
+        try {
+            ListOfFiles = Files.newDirectoryStream(Paths.get(currentDirectory, "taskFiles"), new DirectoryStream.Filter<Path>() {
+                @Override
+                public boolean accept(Path entry) throws IOException {
+                    return entry.getFileName().toString().endsWith("." + fileExtent);
+                }
+            });
+
+            for (Path aFilePath :
+                    ListOfFiles) {
+                listOfFileNames.add(aFilePath.getFileName().toString());
             }
-        });
-
-        List<String> ListOfFileNames = new ArrayList<>();
-        for (Path aFilePath:
-                ListOfFiles) {
-            ListOfFileNames.add(aFilePath.getFileName().toString());
+        } catch (IOException e) {
+            ViewObj viewObj = new ViewObj();
+            viewObj.display("FilesHandler.getListOfFiles","Failed to filter the list of tasks files",e);
+            listOfFileNames = null;
         }
-
-        return ListOfFileNames;
+        return listOfFileNames;
     }
 
     public static boolean exists(String aFileName) {

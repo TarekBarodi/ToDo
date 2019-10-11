@@ -32,10 +32,13 @@ public class ToDoApp {
             ViewObj viewObj = new ViewObj();
             viewObj.display("Welcome to ToDo List application");
             viewObj.display("You can select one of the following:");
-            viewObj.display(1, colorTxt(TxtColor.YELLOW, "Open the ") + colorTxt(TxtColor.BLUE, "recent ") + colorTxt(TxtColor.YELLOW, "Tasks file."));
-            viewObj.display(2, colorTxt(TxtColor.YELLOW, "Open ") + colorTxt(TxtColor.BLUE, "another ") + colorTxt(TxtColor.YELLOW, "Tasks file."));
-            viewObj.display(3, colorTxt(TxtColor.YELLOW, "Open ") + colorTxt(TxtColor.BLUE, "new ") + colorTxt(TxtColor.YELLOW, "Tasks file."));
-            viewObj.display(0, colorTxt(TxtColor.YELLOW, "Escape "));
+            viewObj.display(1, viewObj.colorTxt(TxtColor.YELLOW, "Open the ")
+                    + viewObj.colorTxt(TxtColor.BLUE, "recent ") + viewObj.colorTxt(TxtColor.YELLOW, "Tasks file."));
+            viewObj.display(2, viewObj.colorTxt(TxtColor.YELLOW, "Open ")
+                    + viewObj.colorTxt(TxtColor.BLUE, "existing ") + viewObj.colorTxt(TxtColor.YELLOW, "Tasks file."));
+            viewObj.display(3, viewObj.colorTxt(TxtColor.YELLOW, "Open ")
+                    + viewObj.colorTxt(TxtColor.BLUE, "new ") + viewObj.colorTxt(TxtColor.YELLOW, "Tasks file."));
+            viewObj.display(0, viewObj.colorTxt(TxtColor.YELLOW, "Escape "));
             viewObj.display("Note: Enter the selection number 1 or 2 or 3, and press return!");
 
             ControlObj controlObj = new ControlObj();
@@ -60,7 +63,7 @@ public class ToDoApp {
         }
     }
 
-    public static String colorTxt(TxtColor txtColor, String txt){
+    public String colorTxt(TxtColor txtColor, String txt){
         String index = null;
 
         switch (txtColor){
@@ -108,23 +111,7 @@ public class ToDoApp {
                 tasksFile = openRecentTasksFile(logFile);
                 break;
             case 2: // Open an existing tasks file.
-                boolean selected = false;
-                while (!selected) {
-                    viewObj.display("You can open one of the following task files:");
-                    List<String> listOfTaskFiles = FilesHandler.getListOfFiles("tsk");
-                    viewObj.displayOrdered(listOfTaskFiles);
-                    viewObj.display("");
-                    viewObj.display("Enter the number of the index of the file to open!");
-                    int selectionOfTaskFile = controlObj.readCommandSelection(1, listOfTaskFiles.size());
-                    if (selectionOfTaskFile != 0){
-                        tasksFileName = listOfTaskFiles.get(selectionOfTaskFile-1);
-                        tasksFile = new TasksFile(tasksFileName);
-                        selected = true;
-                        logFile.registerTasksFile(tasksFile.getFilePath());
-                    } else {
-                        viewObj.display(colorTxt(TxtColor.RED,"There is a problem is selection number, you have to re-enter the index again."));
-                    }
-                }
+                tasksFile = openExistingTasksFile();
                 break;
             case 3: // New Tasks File
                 boolean repeatedFileName = true;
@@ -143,6 +130,32 @@ public class ToDoApp {
 
         }
 
+        return tasksFile;
+    }
+
+    private static TasksFile openExistingTasksFile() {
+        boolean selected = false;
+        ViewObj viewObj = new ViewObj();
+        ControlObj controlObj = new ControlObj();
+        String tasksFileName = "";
+        TasksFile tasksFile = null;
+        LogFile logFile = new LogFile("logDoc.log");
+        while (!selected) {
+            viewObj.display("You can open one of the following task files:");
+            List<String> listOfTaskFiles = FilesHandler.getListOfFiles("tsk");
+            viewObj.displayOrdered(listOfTaskFiles);
+            viewObj.display("");
+            viewObj.display("Enter the number of the index of the file to open!");
+            int selectionOfTaskFile = controlObj.readCommandSelection(1, listOfTaskFiles.size()); //returning zero here means that there is no proper selection number is entered.
+            if (selectionOfTaskFile != 0){
+                tasksFileName = listOfTaskFiles.get(selectionOfTaskFile-1);
+                tasksFile = new TasksFile(tasksFileName);
+                selected = true;
+                logFile.registerTasksFile(tasksFile.getFilePath());
+            } else {
+                viewObj.display(viewObj.colorTxt(TxtColor.RED,"There is a problem is selection number, you have to re-enter the index again."));
+            }
+        }
         return tasksFile;
     }
 

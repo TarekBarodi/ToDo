@@ -2,7 +2,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class ControlObj {
-    public int readCommandSelection(int bottomLimit, int topLimit) throws Exception {
+    public int readCommandSelection(int bottomLimit, int topLimit) {
         Scanner scanner;
         int intSelection = bottomLimit-1;
         try {
@@ -19,7 +19,8 @@ public class ControlObj {
             }
 
         } catch (Exception e) {
-            System.out.println("Failure in controlObj.readCommandSelection method; " + e.getMessage());
+            ViewObj viewObj = new ViewObj();
+            viewObj.display("ControlObj.readCommandSelection", "Failed to read the command selection.",e);
             intSelection = bottomLimit-1;
         } finally {
             return intSelection;
