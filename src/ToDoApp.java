@@ -22,6 +22,11 @@ public class ToDoApp {
         //including registering its path in the log file.
         TasksFile tasksFile = createTaskFile(selectedOption);
 
+        // warning: to do the following TasksFile should not be null
+        TasksPool tasksPool = new TasksPool(tasksFile);
+
+
+
 
 
     }
@@ -53,6 +58,97 @@ public class ToDoApp {
 
         }
         return selectedOption;
+    }
+
+
+
+    public static TasksFile createTaskFile(int option) throws Exception {
+        ViewObj viewObj = new ViewObj();
+        ControlObj controlObj = new ControlObj();
+        TasksFile tasksFile = null;
+        String tasksFileName = "";
+        LogFile logFile = new LogFile("logDoc.log");
+        switch (option) {
+            case 0: // Escape
+                viewObj.display("Thank You, Good Luck!");
+                break;
+            case 1: // Open the recent opened taskFile
+                tasksFile = openRecentTasksFile(logFile);
+                break;
+            case 2: // Open an existing tasks file.
+                tasksFile = openExistingTasksFile();
+                break;
+            case 3: // New Tasks File
+                tasksFile = openNewTasksFile();
+                break;
+        }
+
+        // If taskFile created successfully (which means there is file created on the device), then register its path
+        // in the log file.
+        if (tasksFile != null) {
+            logFile.registerTasksFile(tasksFile.getFilePath());
+        }
+
+        return tasksFile;
+    }
+
+    private static TasksFile openRecentTasksFile(LogFile logFile) {
+        String tasksFileName = FilesHandler.getFileNameFromPath(logFile.readTasksFilePath());
+        TasksFile tasksFile = null;
+        if (TasksFile.exists(tasksFileName)){
+            tasksFile = new TasksFile(tasksFileName);
+        } else {
+            ViewObj viewObj = new ViewObj();
+            viewObj.display("There is no recent tasks file in the log file, opening process is failed, you can rerun the application and select another option");
+            tasksFile = null;
+        }
+        return tasksFile;
+
+    }
+
+
+
+    private static TasksFile openExistingTasksFile() {
+        boolean selected = false;
+        ViewObj viewObj = new ViewObj();
+        ControlObj controlObj = new ControlObj();
+        String tasksFileName = "";
+        TasksFile tasksFile = null;
+        while (!selected) {
+            viewObj.display("You can open one of the following task files:");
+            List<String> listOfTaskFiles = FilesHandler.getListOfFiles("tsk");
+            viewObj.displayOrdered(listOfTaskFiles);
+            viewObj.display("");
+            viewObj.display("Enter the number of the index of the file to open!");
+            int selectionOfTaskFile = controlObj.readCommandSelection(1, listOfTaskFiles.size()); //returning zero here means that there is no proper selection number is entered.
+            if (selectionOfTaskFile != 0){
+                tasksFileName = listOfTaskFiles.get(selectionOfTaskFile-1);
+                tasksFile = new TasksFile(tasksFileName);
+                selected = true;
+            } else {
+                viewObj.display(viewObj.colorTxt(TxtColor.RED,"There is a problem is selection number, you have to re-enter the index again."));
+            }
+        }
+        return tasksFile;
+    }
+
+    private static TasksFile openNewTasksFile() {
+        ViewObj viewObj = new ViewObj();
+        ControlObj controlObj = new ControlObj();
+        String tasksFileName = "";
+        TasksFile tasksFile = null;
+        boolean repeatedFileName = true;
+        while (repeatedFileName) {
+            viewObj.display("Enter the tasks file name:");
+            tasksFileName = controlObj.readFileName();
+            if (TasksFile.exists(tasksFileName)) {
+                viewObj.display("There is a tasks file already exists, retype another name, please!");
+            } else { // initiated a tasksFile obj
+                repeatedFileName = false;
+                tasksFile = new TasksFile(tasksFileName);
+            }
+        }
+        return tasksFile;
     }
 
     public static boolean isInteger(String txt){
@@ -97,93 +193,4 @@ public class ToDoApp {
         return "\u001B[" + index + "m" + txt + "\u001B[" + 0 + "m";
 
     }
-
-    public static TasksFile createTaskFile(int option) throws Exception {
-        ViewObj viewObj = new ViewObj();
-        ControlObj controlObj = new ControlObj();
-        TasksFile tasksFile = null;
-        String tasksFileName = "";
-        LogFile logFile = new LogFile("logDoc.log");
-        switch (option) {
-            case 0: // Escape
-                viewObj.display("Thank You, Good Luck!");
-                break;
-            case 1: // Open the recent opened taskFile
-                tasksFile = openRecentTasksFile(logFile);
-                break;
-            case 2: // Open an existing tasks file.
-                tasksFile = openExistingTasksFile();
-                break;
-            case 3: // New Tasks File
-                tasksFile = openNewTasksFile();
-                break;
-        }
-
-        // If taskFile created successfully (which means there is file created on the device), then register its path
-        // in the log file.
-        if (tasksFile != null) {
-            logFile.registerTasksFile(tasksFile.getFilePath());
-        }
-
-        return tasksFile;
-    }
-
-    private static TasksFile openNewTasksFile() {
-        ViewObj viewObj = new ViewObj();
-        ControlObj controlObj = new ControlObj();
-        String tasksFileName = "";
-        TasksFile tasksFile = null;
-        boolean repeatedFileName = true;
-        while (repeatedFileName) {
-            viewObj.display("Enter the tasks file name:");
-            tasksFileName = controlObj.readFileName();
-            if (TasksFile.exists(tasksFileName)) {
-                viewObj.display("There is a tasks file already exists, retype another name, please!");
-            } else { // initiated a tasksFile obj
-                repeatedFileName = false;
-                tasksFile = new TasksFile(tasksFileName);
-            }
-        }
-        return tasksFile;
-    }
-
-    private static TasksFile openExistingTasksFile() {
-        boolean selected = false;
-        ViewObj viewObj = new ViewObj();
-        ControlObj controlObj = new ControlObj();
-        String tasksFileName = "";
-        TasksFile tasksFile = null;
-        while (!selected) {
-            viewObj.display("You can open one of the following task files:");
-            List<String> listOfTaskFiles = FilesHandler.getListOfFiles("tsk");
-            viewObj.displayOrdered(listOfTaskFiles);
-            viewObj.display("");
-            viewObj.display("Enter the number of the index of the file to open!");
-            int selectionOfTaskFile = controlObj.readCommandSelection(1, listOfTaskFiles.size()); //returning zero here means that there is no proper selection number is entered.
-            if (selectionOfTaskFile != 0){
-                tasksFileName = listOfTaskFiles.get(selectionOfTaskFile-1);
-                tasksFile = new TasksFile(tasksFileName);
-                selected = true;
-            } else {
-                viewObj.display(viewObj.colorTxt(TxtColor.RED,"There is a problem is selection number, you have to re-enter the index again."));
-            }
-        }
-        return tasksFile;
-    }
-
-    private static TasksFile openRecentTasksFile(LogFile logFile) {
-        String tasksFileName = FilesHandler.getFileNameFromPath(logFile.readTasksFilePath());
-        TasksFile tasksFile = null;
-        if (TasksFile.exists(tasksFileName)){
-            tasksFile = new TasksFile(tasksFileName);
-        } else {
-            ViewObj viewObj = new ViewObj();
-            viewObj.display("There is no recent tasks file in the log file, opening process is failed, you can rerun the application and select another option");
-            tasksFile = null;
-        }
-        return tasksFile;
-
-    }
-
-
 }

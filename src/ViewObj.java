@@ -67,4 +67,15 @@ public class ViewObj {
         return "\u001B[" + index + "m" + txt + "\u001B[" + 0 + "m";
 
     }
+
+
+    public void display(Task task) {
+        System.out.println(colorTxt(TxtColor.BLUE,"Task Information:"));
+        System.out.println("Task Title:\t\t\t" + task.getTitle());
+        System.out.println("Task Created Date\t" + task.getCreatedDate());
+        System.out.println("Task Due Date:\t\t" + task.getDueDate());
+        System.out.println("Task Project:\t\t" + task.getProject());
+        System.out.println("Task Status:\t\t" + task.getStatus());
+        System.out.println();
+    }
 }

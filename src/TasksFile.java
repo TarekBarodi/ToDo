@@ -3,6 +3,7 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class TasksFile extends FilesHandler {
@@ -18,4 +19,12 @@ public class TasksFile extends FilesHandler {
     }
 
 
+    public ArrayList<Task> readTasksList() {
+        //Implementation required
+        return null;
+    }
+
+    public void addTasktoFile(){
+        //Implementation required
+    }
 }
