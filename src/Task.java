@@ -1,3 +1,4 @@
+import java.lang.reflect.Field;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -5,20 +6,33 @@ import java.util.Date;
 import java.util.List;
 
 public class Task {
-    private int id;
     private String title;
     private Date createdDate;
     private Date dueDate;
     private String project;
     private Status status;
 
+    /*
+    public static List<String> getFieldNamesList(){
+        List<String> listOfFieldNames = new ArrayList<>();
+        Task task = new Task();
+
+        Field[] fields = task.getClass().getDeclaredFields();
+
+        for (Field field :fields) {
+            listOfFieldNames.add(field.getName());
+        }
+
+        return listOfFieldNames;
+    }
+    */
+
     /**
      * toList method casting all the values of the fields (title, createdDate, dueDate, project, status) as a list of
      * Strings.
-     * note that the (id) field is excluded.
      * @return List of Strings
      */
-    public List<String> toList(){ //without id
+    public List<String> toList(){
         List<String> listOfFields = new ArrayList<>();
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -33,12 +47,6 @@ public class Task {
 
 
 
-
-
-
-    public void setId(int id){
-        this.id = id;
-    }
 
     public void setTitle(String title){
         this.title = title;
@@ -63,11 +71,6 @@ public class Task {
 
 
 
-
-
-    public int getId(){
-        return id;
-    }
 
     public String getTitle(){
         return title;

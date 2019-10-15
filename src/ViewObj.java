@@ -144,13 +144,16 @@ public class ViewObj {
         int[] maxNumberOfChars = {0,0,0,0,0}; // related to index, task title, due date, project and status respectively
         int[] numberOfChars = {0,0,0,0,0}; // related to index, task title, due date, project and status respectively
 
+
+
         for (int i = 0; i < tasks.size(); i++) {
             Task task = tasks.get(i); //looping over elements in tasksList
+            List<String> listOfTaskFieldValues = task.toList();
             numberOfChars[0] = (""+i+1).length();
-            numberOfChars[1] = task.getTitle().length();
-            numberOfChars[2] = dateFormat.format(task.getDueDate()).length();
-            numberOfChars[3] = task.getProject().length();
-            numberOfChars[4] = task.getStatus().toString().length();
+            numberOfChars[1] =  listOfTaskFieldValues.get(0).length();  //task.getTitle().length();
+            numberOfChars[2] =  listOfTaskFieldValues.get(2).length();  //dateFormat.format(task.getDueDate()).length();
+            numberOfChars[3] =  listOfTaskFieldValues.get(3).length();  //task.getProject().length();
+            numberOfChars[4] =  listOfTaskFieldValues.get(4).length();  //task.getStatus().toString().length();
 
             //update the max number of characters of each field
             for (int j = 0; j <= 4; j++) {
