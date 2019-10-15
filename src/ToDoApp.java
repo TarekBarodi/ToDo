@@ -6,7 +6,7 @@ public class ToDoApp {
 
     }
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         // user select an option to open the Tasks File
         int selectedOpenOption = selectOpenFileOption();
 
@@ -133,7 +133,7 @@ public class ToDoApp {
 
 
 
-    public static TasksFile createTaskFile(int option) throws Exception {
+    public static TasksFile createTaskFile(int option) {
         ViewObj viewObj = new ViewObj();
         ControlObj controlObj = new ControlObj();
         TasksFile tasksFile = null;
