@@ -69,7 +69,7 @@ public class ToDoApp {
 
         int selectedViewOption = 0;
         while (selectedViewOption == 0) { // continue looping until a proper number picked
-            viewObj.display("Pick an option to view the tasks:");
+            viewObj.displayInstruction("Pick an option to view the tasks:");
 
             // user will see the options: view all tasks, view by project, view by due date
             viewObj.displayTasksViewOptions();
