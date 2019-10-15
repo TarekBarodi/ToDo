@@ -1,4 +1,8 @@
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Task {
     private int id;
@@ -8,10 +12,24 @@ public class Task {
     private String project;
     private Status status;
 
+    /**
+     * toList method casting all the values of the fields (title, createdDate, dueDate, project, status) as a list of
+     * Strings.
+     * note that the (id) field is excluded.
+     * @return List of Strings
+     */
+    public List<String> toList(){ //without id
+        List<String> listOfFields = new ArrayList<>();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
+        listOfFields.add(getTitle());
+        listOfFields.add(dateFormat.format(getCreatedDate()));
+        listOfFields.add(dateFormat.format(getDueDate()));
+        listOfFields.add(getProject());
+        listOfFields.add(getStatus().toString());
 
-
-
+        return listOfFields;
+    }
 
 
 
