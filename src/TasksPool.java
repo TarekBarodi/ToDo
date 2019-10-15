@@ -16,7 +16,7 @@ public class TasksPool {
         this.tasksFile = tasksFile;
 
         // get the tasks list from the tasks file
-        tasksList = tasksFile.readTasksList(); //not implemented yet
+        tasksList = tasksFile.readTasksList();
 
         // get the projects list from the tasks list
         for (Task task:
