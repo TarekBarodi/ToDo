@@ -1,12 +1,4 @@
-import java.io.File;
-import java.io.FilenameFilter;
-import java.io.IOException;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
-import java.util.Scanner;
 
 public class ToDoApp {
 
@@ -16,20 +8,101 @@ public class ToDoApp {
 
     public static void main(String[] args) throws Exception {
         // user select an option to open the Tasks File
-        int selectedOption = selectOpenFileOption();
+        int selectedOpenOption = selectOpenFileOption();
 
         //Create a tasksFile depending on the option selected: 1 for recent, 2 for existing, 3 for new file.
         //including registering its path in the log file.
-        TasksFile tasksFile = createTaskFile(selectedOption);
+        TasksFile tasksFile = createTaskFile(selectedOpenOption);
 
         // warning: to do the following TasksFile should not be null
-        TasksPool tasksPool = new TasksPool(tasksFile);
+        TasksPool tasksPool = new TasksPool(tasksFile); //in the constructor TasksPool read tasksFile
+
+        ViewObj viewObj = new ViewObj();
+
+        // user will see an overview info about total number of done and undone tasks
+        viewObj.displayAsTitle("Tasks File '" + tasksPool.getTasksFile().getFileName() + "'Opened");
+        viewObj.displayTasksGeneralInfo(tasksPool);
 
 
+        ControlObj controlObj = new ControlObj();
+        int selectedTasksOption = -1;
+        while (selectedTasksOption == -1) {
+            // user will see the option available to view, add, remove, edit a task or to quit
+            viewObj.displayInstruction("Pick an option:");
+            viewObj.displayTasksOptions();
+            viewObj.displayPrompt("Enter a number between 1 and 4:");
 
+            // user select an option to (1)view, (2)add, (3)remove, (4)edit a task or (0)quit
+            selectedTasksOption = controlObj.readCommandSelection(0, 4); // return -1 if no proper number selected
+            viewObj.display((selectedTasksOption == -1) ? "You have to enter a number between 0 and 4, please try again!" : "");
+        }
+
+
+        switch (selectedTasksOption) {
+            case 0: // to quit
+                viewObj.display("Thank You, Good Luck!");
+                break;
+            case 1: // view tasks
+                viewObj.displayAsTitle("VIEW THE TASKS LIST");
+                viewTasks(tasksPool);
+                break;
+            case 2: // add task
+                Task task = controlObj.readTask(tasksPool.projects);
+                tasksPool.addTask(task);
+                break;
+            case 3: // remove task
+                break;
+            case 4: // edit task
+
+        }
+
+       /* //try code
+        ControlObj controlObj = new ControlObj();
+        for (int i=0; i<5; ++i) {
+            Task task = controlObj.readTask(tasksPool.projects);
+            tasksPool.addTask(task);*/
+    }
+
+    public static void viewTasks(TasksPool tasksPool) {
+        ViewObj viewObj = new ViewObj();
+        ControlObj controlObj = new ControlObj();
+
+        int selectedViewOption = 0;
+        while (selectedViewOption == 0) { // continue looping until a proper number picked
+            viewObj.display("Pick an option to view the tasks:");
+
+            // user will see the options: view all tasks, view by project, view by due date
+            viewObj.displayTasksViewOptions();
+
+            // when the user make a selection, it will stored in selectedViewOption as int
+            viewObj.displayPrompt("Enter a number between 1 and 3:");
+            selectedViewOption = controlObj.readCommandSelection(1, 3);
+
+            viewObj.display((selectedViewOption == 0) ? "You have to enter a number between 1 and 3, please try again!" : "");
+        }
+
+        switch (selectedViewOption) {
+            case 1: // view all tasks
+                viewObj.displayAsTitle("\nAll Tasks:");
+                viewObj.displayAllTasksInColumns(tasksPool);
+                break;
+            /*case 2: // view by project
+                viewObj.display("You have the following projects:");
+                viewObj.displayOrdered(tasksPool.projects);
+
+                viewObj.displayProjectViewOptions();
+
+                int[] projectIndices = controlObj.readProjectsIndices(); //projects indices starts from 0, if it is -1
+                                                                         // this means no entered value
+                viewObj.displayTasksByProjects(projectIndices);
+                break;
+            case 3: // view by due date*/
+
+        }
 
 
     }
+
 
     public static int selectOpenFileOption() throws Exception {
         boolean isOptionSelected = false;
@@ -37,15 +110,12 @@ public class ToDoApp {
         while (!isOptionSelected) {
             ViewObj viewObj = new ViewObj();
             viewObj.display("Welcome to ToDo List application");
-            viewObj.display("You can select one of the following:");
-            viewObj.display(1, viewObj.colorTxt(TxtColor.YELLOW, "Open the ")
-                    + viewObj.colorTxt(TxtColor.BLUE, "recent ") + viewObj.colorTxt(TxtColor.YELLOW, "Tasks file."));
-            viewObj.display(2, viewObj.colorTxt(TxtColor.YELLOW, "Open ")
-                    + viewObj.colorTxt(TxtColor.BLUE, "existing ") + viewObj.colorTxt(TxtColor.YELLOW, "Tasks file."));
-            viewObj.display(3, viewObj.colorTxt(TxtColor.YELLOW, "Open ")
-                    + viewObj.colorTxt(TxtColor.BLUE, "new ") + viewObj.colorTxt(TxtColor.YELLOW, "Tasks file."));
-            viewObj.display(0, viewObj.colorTxt(TxtColor.YELLOW, "Escape "));
-            viewObj.display("Note: Enter the selection number 1 or 2 or 3, and press return!");
+            viewObj.displayInstruction("Pick an option to open a file:");
+            viewObj.display(1, "Open the recent Tasks file.");
+            viewObj.display(2, "Open an existing Tasks file.");
+            viewObj.display(3, "Open a new Tasks file.");
+            viewObj.display(0, "Escape ");
+            viewObj.displayPrompt("Enter the selection number 1 or 2 or 3, and press return:");
 
             ControlObj controlObj = new ControlObj();
             try {
@@ -193,4 +263,10 @@ public class ToDoApp {
         return "\u001B[" + index + "m" + txt + "\u001B[" + 0 + "m";
 
     }
+
 }
+
+
+
+
+

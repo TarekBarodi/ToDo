@@ -60,7 +60,7 @@ public class ControlObj {
         }
     }
 
-    public Task readTaskFromTerminal(List<String> projects) {
+    public Task readTask(List<String> projects) {
         Task task = new Task();
 
         Scanner scanner = new Scanner(System.in);
