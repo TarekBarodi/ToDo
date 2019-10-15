@@ -16,17 +16,21 @@ public class ToDoApp {
 
         if (tasksFile != null) {
 
+            // read all tasks in the task file in the device and store as a tasks list in tasksPool object.
             TasksPool tasksPool = new TasksPool(tasksFile); //in the constructor TasksPool read tasksFile
 
             ViewObj viewObj = new ViewObj();
 
+            //report of one line summarizing how many tasks are done and to do.
             // user will see an overview info about total number of done and undone tasks
             viewObj.displayAsTitle("Tasks File '" + tasksPool.getTasksFile().getFileName() + "'Opened");
             viewObj.displayTasksGeneralInfo(tasksPool);
 
-
+            //a list of options to manage the tasks appear, so that the user can pick one of them
             ControlObj controlObj = new ControlObj();
             int selectedTasksOption = -1;
+
+            //looping till the user enter a valid number of option
             while (selectedTasksOption == -1) {
                 // user will see the option available to view, add, remove, edit a task or to quit
                 viewObj.displayInstruction("Pick an option:");
@@ -38,18 +42,21 @@ public class ToDoApp {
                 viewObj.display((selectedTasksOption == -1) ? "You have to enter a number between 0 and 4, please try again!" : "");
             }
 
-
+            //the selected option specify the action to be executed regarding managing the tasks list
             switch (selectedTasksOption) {
                 case 0: // to quit
+                    //just a goodbye message appear with no further action
                     viewObj.display("Thank You, Good Luck!");
                     break;
                 case 1: // view tasks
+                    //Viewing tasks has more options encapsulated in viewTasks method.
                     viewObj.displayAsTitle("VIEW THE TASKS LIST");
                     viewTasks(tasksPool);
                     break;
                 case 2: // add task
                     Task task = controlObj.readTask(tasksPool.projects);
-                    tasksPool.addTask(task);
+                    //Adding tasks has more options encapsulated in addTasks method.
+                    //addTasks();
                     break;
                 case 3: // remove task
                     break;
