@@ -191,9 +191,10 @@ public class ViewObj {
     public void displayTaskInColumns(int index, Task task, List<Integer> tabs) {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String aTab = "\t";
-        System.out.printf("%-"+tabs.get(0)*8+"s"+"%-"+tabs.get(1)*8+"s"+"%-"+tabs.get(2)*8+"s"+"%-"
-                        +tabs.get(3)*8+"s%n"+tabs.get(4)*8+"s%n"
-                ,index ,task.getTitle(), dateFormat.format(task.getDueDate()), task.getProject() , task.getStatus());
+        System.out.printf("%-"+tabs.get(0)*8+"s"+"%-"+tabs.get(1)*8+"s"+"%-"+tabs.get(2)*8+"s"
+                        +"%-"+tabs.get(3)*8+"s" +"%-"+tabs.get(4)*8+"s%n"
+                        ,""+index ,task.getTitle(), dateFormat.format(task.getDueDate())
+                        , task.getProject() , task.getStatus());
     }
 
 
