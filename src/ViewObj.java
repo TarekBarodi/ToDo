@@ -179,10 +179,13 @@ public class ViewObj {
 
     private void displayTasksHeaderInColumns(List<Integer> tabs) {
         String aTab = "\t";
-        System.out.printf("%-"+tabs.get(0)*8+"s"+"%-"+tabs.get(1)*8+"s"+"%-"+tabs.get(2)*8+"s"+"%-"+tabs.get(3)*8+"s%n"
-                ,"Title", "DueDate", "Project" , "Status");
-        System.out.printf("%-"+tabs.get(0)*8+"s"+"%-"+tabs.get(1)*8+"s"+"%-"+tabs.get(2)*8+"s"+"%-"+tabs.get(3)*8+"s%n"
-                ,"-".repeat(tabs.get(0)*8-2), "-".repeat(tabs.get(1)*8-2), "-".repeat(tabs.get(2)*8-2), "-".repeat(tabs.get(3)*8-2));
+        System.out.printf("%-"+tabs.get(0)*8+"s" +"%-"+tabs.get(1)*8+"s" +"%-"+tabs.get(2)*8+"s"
+                        +"%-"+tabs.get(3)*8+"s" +"%-"+tabs.get(4)*8+"s%n"
+                        ,"Index" , "Title", "DueDate", "Project" , "Status");
+        System.out.printf("%-"+tabs.get(0)*8+"s"+"%-"+tabs.get(1)*8+"s"+"%-"+tabs.get(2)*8 +"s"
+                        +"%-"+tabs.get(3)*8+"s" +"%-"+tabs.get(4)*8+"s%n"
+                ,"-".repeat(tabs.get(0)*8-2), "-".repeat(tabs.get(1)*8-2), "-".repeat(tabs.get(2)*8-2)
+                , "-".repeat(tabs.get(3)*8-2) , "-".repeat(tabs.get(4)*8-2));
     }
 
     public void displayTaskInColumns(int index, Task task, List<Integer> tabs) {
