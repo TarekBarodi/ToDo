@@ -170,7 +170,10 @@ public class ViewObj {
 
         // display each task in a row, using tabs to format the with of columns
         //looping over elements in tasksList
-        for (Task task : tasks) displayTaskInColumns(task, tabs);
+        for (int i = 0; i < tasks.size(); i++) {
+            Task task = tasks.get(i);
+            displayTaskInColumns(i,task, tabs);
+        }
 
     }
 
