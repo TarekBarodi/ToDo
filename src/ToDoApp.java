@@ -104,7 +104,7 @@ public class ToDoApp {
     }
 
 
-    public static int selectOpenFileOption() throws Exception {
+    public static int selectOpenFileOption() {
         boolean isOptionSelected = false;
         int selectedOption = 0;
         while (!isOptionSelected) {
@@ -122,7 +122,8 @@ public class ToDoApp {
                 selectedOption = controlObj.readCommandSelection(0,3);
                 isOptionSelected = true;
             } catch (Exception e) {
-                throw new Exception("Failed to select an option to open file");
+                viewObj.display("ToDoAp.selectOpenFileOption","Failed to select an option to open file",e);
+                return  -1;
             }
 
 

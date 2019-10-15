@@ -144,8 +144,6 @@ public class ViewObj {
         int[] maxNumberOfChars = {0,0,0,0,0}; // related to index, task title, due date, project and status respectively
         int[] numberOfChars = {0,0,0,0,0}; // related to index, task title, due date, project and status respectively
 
-
-
         for (int i = 0; i < tasks.size(); i++) {
             Task task = tasks.get(i); //looping over elements in tasksList
             List<String> listOfTaskFieldValues = task.toList();
