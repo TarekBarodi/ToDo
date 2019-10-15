@@ -23,31 +23,41 @@ public class TasksFile extends FilesHandler {
     }
 
 
-    public ArrayList<Task> readTasksList() throws IOException, ParseException {
-        //Implementation required
+    public ArrayList<Task> readTasksList() {
+
         ArrayList<Task> tasksList = new ArrayList<>();
+        ViewObj viewObj = new ViewObj();
 
-        List<String> lines = Files.readAllLines(Paths.get(filePath));
-        int numberOfLines = lines.size();
+        try {
+            List<String> lines = Files.readAllLines(Paths.get(filePath));
+            int numberOfLines = lines.size();
 
 
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        for (int i = 0; i < numberOfLines; i++) {
-            Task task = new Task();
-            Scanner scanner = new Scanner(lines.get(i));
-            scanner.useDelimiter("\t+");
-            if (scanner.hasNext()) {
-                task.setTitle(scanner.next());
-                task.setCreatedDate(dateFormat.parse(scanner.next()));
-                task.setDueDate(dateFormat.parse(scanner.next()));
-                task.setProject(scanner.next());
-                task.setStatus(Status.parse(scanner.next()));
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            for (int i = 0; i < numberOfLines; i++) {
+                Task task = new Task();
+                Scanner scanner = new Scanner(lines.get(i));
+                scanner.useDelimiter("\t+");
+                if (scanner.hasNext()) {
+                    task.setTitle(scanner.next());
+                    task.setCreatedDate(dateFormat.parse(scanner.next()));
+                    task.setDueDate(dateFormat.parse(scanner.next()));
+                    task.setProject(scanner.next());
+                    task.setStatus(Status.parse(scanner.next()));
+                }
+
+                tasksList.add(task);
+
             }
-
-            tasksList.add(task);
-
+        } catch (IOException e){
+            viewObj.display("TasksFile.readTasksList",
+                    "Could not read all lines from the task file on the device",e);
+            return null;
+        } catch (ParseException e){
+            viewObj.display("TasksFile.readTasksList",
+                    "Could not parse the text date of status",e);
+            return null;
         }
-
         return tasksList;
     }
 

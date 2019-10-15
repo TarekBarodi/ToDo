@@ -14,46 +14,48 @@ public class ToDoApp {
         //including registering its path in the log file.
         TasksFile tasksFile = createTaskFile(selectedOpenOption);
 
-        // warning: to do the following TasksFile should not be null
-        TasksPool tasksPool = new TasksPool(tasksFile); //in the constructor TasksPool read tasksFile
+        if (tasksFile != null) {
 
-        ViewObj viewObj = new ViewObj();
+            TasksPool tasksPool = new TasksPool(tasksFile); //in the constructor TasksPool read tasksFile
 
-        // user will see an overview info about total number of done and undone tasks
-        viewObj.displayAsTitle("Tasks File '" + tasksPool.getTasksFile().getFileName() + "'Opened");
-        viewObj.displayTasksGeneralInfo(tasksPool);
+            ViewObj viewObj = new ViewObj();
 
-
-        ControlObj controlObj = new ControlObj();
-        int selectedTasksOption = -1;
-        while (selectedTasksOption == -1) {
-            // user will see the option available to view, add, remove, edit a task or to quit
-            viewObj.displayInstruction("Pick an option:");
-            viewObj.displayTasksOptions();
-            viewObj.displayPrompt("Enter a number between 1 and 4:");
-
-            // user select an option to (1)view, (2)add, (3)remove, (4)edit a task or (0)quit
-            selectedTasksOption = controlObj.readCommandSelection(0, 4); // return -1 if no proper number selected
-            viewObj.display((selectedTasksOption == -1) ? "You have to enter a number between 0 and 4, please try again!" : "");
-        }
+            // user will see an overview info about total number of done and undone tasks
+            viewObj.displayAsTitle("Tasks File '" + tasksPool.getTasksFile().getFileName() + "'Opened");
+            viewObj.displayTasksGeneralInfo(tasksPool);
 
 
-        switch (selectedTasksOption) {
-            case 0: // to quit
-                viewObj.display("Thank You, Good Luck!");
-                break;
-            case 1: // view tasks
-                viewObj.displayAsTitle("VIEW THE TASKS LIST");
-                viewTasks(tasksPool);
-                break;
-            case 2: // add task
-                Task task = controlObj.readTask(tasksPool.projects);
-                tasksPool.addTask(task);
-                break;
-            case 3: // remove task
-                break;
-            case 4: // edit task
+            ControlObj controlObj = new ControlObj();
+            int selectedTasksOption = -1;
+            while (selectedTasksOption == -1) {
+                // user will see the option available to view, add, remove, edit a task or to quit
+                viewObj.displayInstruction("Pick an option:");
+                viewObj.displayTasksOptions();
+                viewObj.displayPrompt("Enter a number between 1 and 4:");
 
+                // user select an option to (1)view, (2)add, (3)remove, (4)edit a task or (0)quit
+                selectedTasksOption = controlObj.readCommandSelection(0, 4); // return -1 if no proper number selected
+                viewObj.display((selectedTasksOption == -1) ? "You have to enter a number between 0 and 4, please try again!" : "");
+            }
+
+
+            switch (selectedTasksOption) {
+                case 0: // to quit
+                    viewObj.display("Thank You, Good Luck!");
+                    break;
+                case 1: // view tasks
+                    viewObj.displayAsTitle("VIEW THE TASKS LIST");
+                    viewTasks(tasksPool);
+                    break;
+                case 2: // add task
+                    Task task = controlObj.readTask(tasksPool.projects);
+                    tasksPool.addTask(task);
+                    break;
+                case 3: // remove task
+                    break;
+                case 4: // edit task
+
+            }
         }
 
        /* //try code

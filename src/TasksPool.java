@@ -8,7 +8,7 @@ public class TasksPool {
     private TasksFile tasksFile;
     List<String> projects = new ArrayList<>();
 
-    public TasksPool(TasksFile tasksFile) throws IOException, ParseException {
+    public TasksPool(TasksFile tasksFile) {
 
         // add one item to projects list "None Project"
         projects.add("None Project");
