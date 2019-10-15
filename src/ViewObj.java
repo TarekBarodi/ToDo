@@ -141,17 +141,19 @@ public class ViewObj {
         List<Integer> tabs = new ArrayList<>();
 
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        int[] maxNumberOfChars = {0,0,0,0}; // related to task title, due date, project and status respectively
-        int[] numberOfChars = {0,0,0,0}; // related to task title, due date, project and status respectively
+        int[] maxNumberOfChars = {0,0,0,0,0}; // related to index, task title, due date, project and status respectively
+        int[] numberOfChars = {0,0,0,0,0}; // related to index, task title, due date, project and status respectively
 
-        for (Task value : tasks) { //looping over elements in tasksList
-            numberOfChars[0] = value.getTitle().length();
-            numberOfChars[1] = dateFormat.format(value.getDueDate()).length();
-            numberOfChars[2] = value.getProject().length();
-            numberOfChars[3] = value.getStatus().toString().length();
+        for (int i = 0; i <= tasks.size(); i++) {
+            Task value = tasks.get(i); //looping over elements in tasksList
+            numberOfChars[0] = (""+i).length();
+            numberOfChars[1] = value.getTitle().length();
+            numberOfChars[2] = dateFormat.format(value.getDueDate()).length();
+            numberOfChars[3] = value.getProject().length();
+            numberOfChars[4] = value.getStatus().toString().length();
 
             //update the max number of characters of each field
-            for (int j = 0; j < 4; j++) {
+            for (int j = 0; j <= 4; j++) {
                 if (numberOfChars[j] > maxNumberOfChars[j]) {
                     maxNumberOfChars[j] = numberOfChars[j];
                 }
@@ -161,7 +163,7 @@ public class ViewObj {
         // every tab is 8 characters, and the value in tabs list represent the number of string tabs that can cover
         // the with of the field
         //0 for title, 1 for due date, 2 for project and 3 for status
-        for (int j = 0; j < 4; j++) tabs.add(maxNumberOfChars[j] / 8 + 1);
+        for (int j = 0; j <= 4; j++) tabs.add(maxNumberOfChars[j] / 8 + 1);
 
         //display the headers of the columns: Title, Due Date, Project and Status
         displayTasksHeaderInColumns(tabs);
