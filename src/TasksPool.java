@@ -6,7 +6,7 @@ import java.util.List;
 public class TasksPool {
     private ArrayList<Task> tasksList;
     private TasksFile tasksFile;
-    List<String> projects = new ArrayList<>();
+    private List<String> projects = new ArrayList<>();
 
     public TasksPool(TasksFile tasksFile) {
 
@@ -80,4 +80,8 @@ public class TasksPool {
     }
 
     public TasksFile getTasksFile() { return tasksFile; }
+
+    public List<String> getProjects() {
+        return projects;
+    }
 }

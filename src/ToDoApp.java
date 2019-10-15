@@ -54,7 +54,7 @@ public class ToDoApp {
                     viewTasks(tasksPool);
                     break;
                 case 2: // add task
-                    Task task = controlObj.readTask(tasksPool.projects);
+                    Task task = controlObj.readTask(tasksPool.getProjects());
                     //Adding tasks has more options encapsulated in addTasks method.
                     //addTasks();
                     break;
@@ -99,7 +99,7 @@ public class ToDoApp {
                 break;
             case 2: // view by project
                 viewObj.display("You have the following projects:");
-                viewObj.displayOrdered(tasksPool.projects);
+                viewObj.displayOrdered(tasksPool.getProjects());
 
                 // display two options: just press enter button or enter projects indices separated by commas
                 viewObj.displayProjectViewOptions();
@@ -109,7 +109,7 @@ public class ToDoApp {
                                                                                  //, if it is 0 this means no entered value
 
                 //display the tasks categorized and sorted by projects
-                viewObj.displayTasksByProjects(projectIndices);
+                viewObj.displayTasksByProjects(tasksPool, projectIndices);
                 break;
             /*case 3: // view by due date*/
 

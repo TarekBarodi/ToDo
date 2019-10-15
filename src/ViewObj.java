@@ -210,4 +210,8 @@ public class ViewObj {
     public void displayInstruction(String txt) {
         display(colorTxt(TxtColor.YELLOW,txt));
     }
+
+    public void displayTasksByProjects(TasksPool tasksPool, List<Integer> projectIndices) {
+        List<String> projectsList = tasksPool.getProjects();
+    }
 }
