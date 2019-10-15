@@ -146,7 +146,7 @@ public class ViewObj {
 
         for (int i = 0; i < tasks.size(); i++) {
             Task value = tasks.get(i); //looping over elements in tasksList
-            numberOfChars[0] = (""+i).length();
+            numberOfChars[0] = (""+i+1).length();
             numberOfChars[1] = value.getTitle().length();
             numberOfChars[2] = dateFormat.format(value.getDueDate()).length();
             numberOfChars[3] = value.getProject().length();
@@ -172,7 +172,7 @@ public class ViewObj {
         //looping over elements in tasksList
         for (int i = 0; i < tasks.size(); i++) {
             Task task = tasks.get(i);
-            displayTaskInColumns(i,task, tabs);
+            displayTaskInColumns(i+1,task, tabs);
         }
 
     }
