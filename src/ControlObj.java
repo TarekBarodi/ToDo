@@ -2,6 +2,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
@@ -157,5 +158,23 @@ public class ControlObj {
         Scanner scanner = new Scanner(System.in);
         viewObj.display("Enter the task title:");
         return scanner.nextLine();
+    }
+
+    public List<Integer> readProjectsIndices() {
+        List<Integer> projectsIndices = new ArrayList<>();
+        Scanner scanner = new Scanner(System.in);
+
+        while (scanner.hasNextLine()) {
+            String wholeLine = scanner.nextLine();
+            wholeLine = wholeLine.replace("\\s+","");
+            scanner = new Scanner(wholeLine);
+            scanner.useDelimiter(",");
+            while (scanner.hasNextInt()) {
+                projectsIndices.add(scanner.nextInt());
+            }
+        }
+
+        return projectsIndices;
+
     }
 }
