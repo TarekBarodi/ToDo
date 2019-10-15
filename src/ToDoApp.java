@@ -77,6 +77,7 @@ public class ToDoApp {
         ControlObj controlObj = new ControlObj();
 
         int selectedViewOption = 0;
+        //keep looping till the user enter a valid selection number
         while (selectedViewOption == 0) { // continue looping until a proper number picked
             viewObj.displayInstruction("Pick an option to view the tasks:");
 
@@ -90,22 +91,27 @@ public class ToDoApp {
             viewObj.display((selectedViewOption == 0) ? "You have to enter a number between 1 and 3, please try again!" : "");
         }
 
+
         switch (selectedViewOption) {
             case 1: // view all tasks
                 viewObj.displayAsTitle("\nAll Tasks:");
                 viewObj.displayAllTasksInColumns(tasksPool);
                 break;
-            /*case 2: // view by project
+            case 2: // view by project
                 viewObj.display("You have the following projects:");
                 viewObj.displayOrdered(tasksPool.projects);
 
+                // display two options: just press enter button or enter projects indices separated by commas
                 viewObj.displayProjectViewOptions();
 
-                int[] projectIndices = controlObj.readProjectsIndices(); //projects indices starts from 0, if it is -1
-                                                                         // this means no entered value
+                //get the project indices entered by user as a list of integers
+                List<Integer> projectIndices = controlObj.readProjectsIndices(); //projects indices starts from 1
+                                                                                 //, if it is 0 this means no entered value
+
+                //display the tasks categorized and sorted by projects
                 viewObj.displayTasksByProjects(projectIndices);
                 break;
-            case 3: // view by due date*/
+            /*case 3: // view by due date*/
 
         }
 
