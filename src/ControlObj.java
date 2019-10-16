@@ -132,7 +132,7 @@ public class ControlObj {
         return projectName;
     }
 
-    private Date readTaskDueDateFromTerminal() {
+    public Date readTaskDueDateFromTerminal() {
         ViewObj viewObj = new ViewObj();
         viewObj.display("Enter the due date in the format YYYY-MM-DD");
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");

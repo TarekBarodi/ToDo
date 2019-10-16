@@ -1,3 +1,4 @@
+import java.util.Date;
 import java.util.List;
 
 public class ToDoApp {
@@ -94,7 +95,7 @@ public class ToDoApp {
                     viewObj.displayAllTasksByProjects(tasksPool);
 
                     //if option equals 2, then show only the tasks related to some projects
-                } else if(selectedProjectViewOption == 2){
+                } else if (selectedProjectViewOption == 2) {
                     //display the tasks categorized and sorted by projects
                     viewObj.display("You can now view only the tasks related to the projects you select.");
 
@@ -105,8 +106,62 @@ public class ToDoApp {
                 }
 
                 break;
-            /*case 3: // view by due date*/
+            case 3: // view by due date*/
+                //Get due date view option: view all tasks sorted by due date, view tasks due by today, view tasks due
+                //by certain date
+                int selectedDateViewOption = getDateViewOption();
 
+                //if option equals 1, then show all tasks sorted by due date
+                if (selectedDateViewOption == 1) {
+                    List<Task> tasksListSortedByDueDate = tasksPool.getTasksListSortedByDueDate();
+                    viewObj.displayAllTasksInColumns(tasksListSortedByDueDate);
+                } else if (selectedDateViewOption == 2) {
+                    //display the tasks due by today date
+                    viewObj.display("You can now view only the tasks due by today date.");
+
+                    //Get the date entered by user
+                    Date date = controlObj.readTaskDueDateFromTerminal();
+
+                    List<Task> tasksListBeforeADueDate = tasksPool.getTasksListBeforeADueDate(date);
+                    viewObj.displayAllTasksInColumns(tasksListBeforeADueDate);
+                } else if (selectedDateViewOption == 3) {
+                    //display the tasks due by a specific date
+                    viewObj.display("You can now view only the tasks due by the date you specify.");
+
+                    //Get the date entered by user
+                    Date date = controlObj.readTaskDueDateFromTerminal();
+
+                    List<Task> tasksListBeforeADueDate = tasksPool.getTasksListBeforeADueDate(date);
+                    viewObj.displayAllTasksInColumns(tasksListBeforeADueDate);
+                }
+        }
+
+    }
+
+    private static int getDateViewOption() {
+        {
+            ViewObj viewObj = new ViewObj();
+            ControlObj controlObj = new ControlObj();
+
+            boolean isDateOptionSelected = false;
+            int selectedDateViewOption = 0;
+            // Loop until a valid option number entered by user
+            while (isDateOptionSelected == false) {
+                // display three options: all tasks sorted by due date, tasks due by today, tasks due by other date
+                viewObj.displayInstruction("Pick an option to view tasks by due date:");
+                viewObj.displayDateViewOptions();
+                viewObj.display("Enter a number between 1 and 3:");
+
+                //read the user input
+                selectedDateViewOption = controlObj.readCommandSelection(1, 3);
+
+                if (selectedDateViewOption >= 1 && selectedDateViewOption <=3) {
+                    isDateOptionSelected = true;
+                } else {
+                    viewObj.display("Invalid entry, try again!");
+                }
+            }
+            return selectedDateViewOption;
         }
 
 
@@ -350,6 +405,8 @@ public class ToDoApp {
     }
 
 }
+
+
 
 
 

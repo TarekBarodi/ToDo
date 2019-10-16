@@ -1,9 +1,6 @@
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class TasksPool {
     private ArrayList<Task> tasksList;
@@ -126,5 +123,21 @@ public class TasksPool {
 
         return projectIndices;
 
+    }
+
+    public List<Task> getTasksListSortedByDueDate() {
+        List<Task> tasksListSortedByDueDate = new ArrayList<>(tasksList);
+
+        Collections.sort(tasksListSortedByDueDate, (a,b)->{return a.getDueDate().compareTo(b.getDueDate());});
+
+        return tasksListSortedByDueDate;
+    }
+
+    public List<Task> getTasksListBeforeADueDate(Date date) {
+        List<Task> getTasksListBeforeADueDate = getTasksListSortedByDueDate();
+
+        getTasksListBeforeADueDate.removeIf(p -> p.getDueDate().after(date));
+
+        return getTasksListBeforeADueDate;
     }
 }

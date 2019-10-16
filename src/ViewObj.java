@@ -244,4 +244,11 @@ public class ViewObj {
         displayTasksByProjects(tasksPool,projectIndices);
 
     }
+
+    public void displayDateViewOptions() {
+        display(1,"Show all tasks sorted by due dates.");
+        display(2,"Show only the tasks which are due today");
+        display(3,"Show only the tasks which are due by specific date");
+    }
+
 }
