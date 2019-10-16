@@ -164,9 +164,10 @@ public class ControlObj {
         List<Integer> projectsIndices = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
 
-        while (scanner.hasNextLine()) {
+        if (scanner.hasNextLine()) {
             String wholeLine = scanner.nextLine();
-            wholeLine = wholeLine.replace("\\s+","");
+            wholeLine = wholeLine.replaceAll("\\s+","");
+
             scanner = new Scanner(wholeLine);
             scanner.useDelimiter(",");
             while (scanner.hasNextInt()) {

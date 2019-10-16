@@ -1,6 +1,8 @@
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 public class ViewObj {
@@ -95,10 +97,8 @@ public class ViewObj {
 
 
     public void displayProjectViewOptions() {
-        display("Enter the indices of the projects separated by commas,");
-        display("OR");
-        display("Press enter to show all tasks sorted by projects.");
-        display("");
+        display(1,"Show all tasks categorized by projects.");
+        display(2,"Show only the tasks related to specific projects.");
     }
 
     public void displayTasksOptions() {
@@ -135,9 +135,9 @@ public class ViewObj {
                 + task.getStatus());
     }
 
-    public void displayAllTasksInColumns(TasksPool tasksPool){ //Tasks are presented in well formatted table,
+    public void displayAllTasksInColumns(List<Task> tasksList){ //Tasks are presented in well formatted table,
                                                                // with headers.
-        List<Task> tasks = tasksPool.getTasksList();
+        List<Task> tasks = tasksList;
         List<Integer> tabs = new ArrayList<>();
 
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -213,5 +213,35 @@ public class ViewObj {
 
     public void displayTasksByProjects(TasksPool tasksPool, List<Integer> projectIndices) {
         List<String> projectsList = tasksPool.getProjects();
+
+        //No need to check the validity of the projectIndices, it's supposed cleaned and sorted before passing it here
+
+        //Loop over all items in the projectsIndices, filter out related tasks and display ordered.
+        for (int i = 0; i < projectIndices.size(); i++) {
+            //index in projectsList start from 0, while projectIndices values starts from 1,
+            //that is why we have to decrement projectIndices values by one, to use as index to get a value
+            //from projectsList
+            int projectIndex = projectIndices.get(i); // as per convention of projectIndices
+            int index = projectIndex -1;
+
+            String projectName = projectsList.get(index);
+            List<Task> tasksForProject = tasksPool.getTasksListByProject(projectName);
+
+            displayAsTitle("Tasks of project (" + projectsList.get(projectIndices.get(i)-1) + "):");
+            displayAllTasksInColumns(tasksForProject);
+        }
+
+    }
+
+    public void displayAllTasksByProjects(TasksPool tasksPool) {
+        List<Integer> projectIndices = new ArrayList<>();
+        int projectsListSize = tasksPool.getProjects().size();
+
+        for (int i = 0; i < projectsListSize; i++) {
+            projectIndices.add(i+1);
+        }
+
+        displayTasksByProjects(tasksPool,projectIndices);
+
     }
 }

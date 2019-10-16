@@ -76,6 +76,46 @@ public class ToDoApp {
         ViewObj viewObj = new ViewObj();
         ControlObj controlObj = new ControlObj();
 
+        //get the option to how to view the tasks: view all, by project or by due date
+        int selectedViewOption = getViewTasksOption();
+
+        switch (selectedViewOption) {
+            case 1: // view all tasks
+                viewObj.displayAsTitle("\nAll Tasks:");
+                viewObj.displayAllTasksInColumns(tasksPool.getTasksList());
+                break;
+
+            case 2: // view by project
+                //Get project view option: view all categorized by project or view only related tasks for a project
+                int selectedProjectViewOption = getProjectViewOption();
+
+                //if option equals 1, then show all tasks categorized by projects
+                if (selectedProjectViewOption == 1) {
+                    viewObj.displayAllTasksByProjects(tasksPool);
+
+                    //if option equals 2, then show only the tasks related to some projects
+                } else if(selectedProjectViewOption == 2){
+                    //display the tasks categorized and sorted by projects
+                    viewObj.display("You can now view only the tasks related to the projects you select.");
+
+                    //Get the project indices entered by user
+                    List<Integer> projectIndices = getProjectIndices(tasksPool);
+
+                    viewObj.displayTasksByProjects(tasksPool, projectIndices);
+                }
+
+                break;
+            /*case 3: // view by due date*/
+
+        }
+
+
+    }
+
+    private static int getViewTasksOption() {
+        ViewObj viewObj = new ViewObj();
+        ControlObj controlObj = new ControlObj();
+
         int selectedViewOption = 0;
         //keep looping till the user enter a valid selection number
         while (selectedViewOption == 0) { // continue looping until a proper number picked
@@ -90,32 +130,61 @@ public class ToDoApp {
 
             viewObj.display((selectedViewOption == 0) ? "You have to enter a number between 1 and 3, please try again!" : "");
         }
+        return selectedViewOption;
+    }
 
+    //Get project view option
+    private static int getProjectViewOption() {
+        ViewObj viewObj = new ViewObj();
+        ControlObj controlObj = new ControlObj();
 
-        switch (selectedViewOption) {
-            case 1: // view all tasks
-                viewObj.displayAsTitle("\nAll Tasks:");
-                viewObj.displayAllTasksInColumns(tasksPool);
-                break;
-            case 2: // view by project
-                viewObj.display("You have the following projects:");
-                viewObj.displayOrdered(tasksPool.getProjects());
+        boolean isProjectOptionSelected = false;
+        int selectedProjectViewOption = 0;
+        // Loop until a valid option number entered by user
+        while (isProjectOptionSelected == false) {
+            // display two options: just press enter button or enter projects indices separated by commas
+            viewObj.displayInstruction("Pick an option to view tasks by project:");
+            viewObj.displayProjectViewOptions();
+            viewObj.display("Enter a number either 1 or 2:");
 
-                // display two options: just press enter button or enter projects indices separated by commas
-                viewObj.displayProjectViewOptions();
+            //read the user input
+            selectedProjectViewOption = controlObj.readCommandSelection(1, 2);
 
-                //get the project indices entered by user as a list of integers
-                List<Integer> projectIndices = controlObj.readProjectsIndices(); //projects indices starts from 1
-                                                                                 //, if it is 0 this means no entered value
-
-                //display the tasks categorized and sorted by projects
-                viewObj.displayTasksByProjects(tasksPool, projectIndices);
-                break;
-            /*case 3: // view by due date*/
-
+            if (selectedProjectViewOption == 1 | selectedProjectViewOption == 2) {
+                isProjectOptionSelected = true;
+            } else {
+                viewObj.display("Invalid entry, try again!");
+            }
         }
+        return selectedProjectViewOption;
+    }
 
+    //Get the project indices entered by user
+    private static List<Integer> getProjectIndices(TasksPool tasksPool) {
+        ViewObj viewObj = new ViewObj();
+        ControlObj controlObj = new ControlObj();
+        boolean isProjectIndicesEntered = false;
+        List<Integer> projectIndices = null;
+        while (isProjectIndicesEntered == false) {
+            viewObj.display("You have the following projects:");
+            viewObj.displayOrdered(tasksPool.getProjects());
+            viewObj.displayPrompt("Enter the indices of the projects separated by commas:");
 
+            //get the project indices entered by user as a list of integers
+            projectIndices = controlObj.readProjectsIndices();
+
+            //clean projectIndices: remove all invalid indices: <= 0 and > projectsCounting
+            projectIndices = tasksPool.cleanProjectIndices(projectIndices);
+
+            //If the projectIndices still empty then display a message and keep isProjectIndicesEntered
+            //false to keep looping in while body until the user enter a valid entry
+            if (projectIndices.isEmpty()) {
+                viewObj.display("Invalid entry, try again!");
+            } else {
+                isProjectIndicesEntered = true;
+            }
+        }
+        return projectIndices;
     }
 
 

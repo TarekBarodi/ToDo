@@ -1,6 +1,8 @@
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 public class TasksPool {
@@ -79,9 +81,50 @@ public class TasksPool {
         return tasksList;
     }
 
+    public List<Task> getTasksListByProject(String projectName) {
+        List<Task> tasksForProject = new ArrayList<>();
+
+        if (projects.contains(projectName)){
+            for (Task task: tasksList) {
+                if (task.getProject().equals(projectName)) {
+                    tasksForProject.add(task);
+                }
+            }
+        }
+
+        return tasksForProject;
+
+    }
+
     public TasksFile getTasksFile() { return tasksFile; }
 
     public List<String> getProjects() {
         return projects;
+    }
+
+
+    public List<Integer> cleanProjectIndices(List<Integer> projectIndices) {
+        int size = projects.size();
+
+        // Check if all projectIndices withing the size of the projectsList, Eliminate all out of index numbers
+        //sorting projectsIndices list
+        Collections.sort(projectIndices);
+
+        //Remove all projectsIndices values greater than size of projectsList or less than or equals zero
+        //case 1: projectIndex > projectsList size
+        //  projectIndex [1 - number of projects]
+        //case 2: projectIndex <= 0
+        Iterator<Integer> it = projectIndices.iterator();
+        //iterate over all items in projectIndices
+        while (it.hasNext()) {
+            Integer projectIndex = it.next();
+            //compare projectIndex
+            if (projectIndex > size | projectIndex <= 0) {
+                it.remove();
+            }
+        }
+
+        return projectIndices;
+
     }
 }
