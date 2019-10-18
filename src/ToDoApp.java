@@ -3,6 +3,8 @@ import java.util.Date;
 import java.util.List;
 
 public class ToDoApp {
+    private static ViewObj viewObj = new ViewObj();
+    private static ControlObj controlObj = new ControlObj();
 
     public ToDoApp() {
 
@@ -21,15 +23,12 @@ public class ToDoApp {
             // read all tasks in the task file in the device and store as a tasks list in tasksPool object.
             TasksPool tasksPool = new TasksPool(tasksFile); //in the constructor TasksPool read tasksFile
 
-            ViewObj viewObj = new ViewObj();
-
             //report of one line summarizing how many tasks are done and to do.
             // user will see an overview info about total number of done and undone tasks
             viewObj.displayAsTitle("Tasks File '" + tasksPool.getTasksFile().getFileName() + "'Opened");
             viewObj.displayTasksGeneralInfo(tasksPool);
 
             //a list of options to manage the tasks appear, so that the user can pick one of them
-            ControlObj controlObj = new ControlObj();
             int selectedTasksOption = -1;
 
             //looping till the user enter a valid number of option
@@ -68,15 +67,12 @@ public class ToDoApp {
         }
 
        /* //try code
-        ControlObj controlObj = new ControlObj();
         for (int i=0; i<5; ++i) {
             Task task = controlObj.readTask(tasksPool.projects);
             tasksPool.addTask(task);*/
     }
 
     public static void viewTasks(TasksPool tasksPool) {
-        ViewObj viewObj = new ViewObj();
-        ControlObj controlObj = new ControlObj();
 
         //get the option to how to view the tasks: view all, by project or by due date
         int selectedViewOption = getViewTasksOption();
@@ -142,8 +138,6 @@ public class ToDoApp {
 
     private static int getDateViewOption() {
         {
-            ViewObj viewObj = new ViewObj();
-            ControlObj controlObj = new ControlObj();
 
             boolean isDateOptionSelected = false;
             int selectedDateViewOption = 0;
@@ -170,8 +164,6 @@ public class ToDoApp {
     }
 
     private static int getViewTasksOption() {
-        ViewObj viewObj = new ViewObj();
-        ControlObj controlObj = new ControlObj();
 
         int selectedViewOption = 0;
         //keep looping till the user enter a valid selection number
@@ -192,8 +184,6 @@ public class ToDoApp {
 
     //Get project view option
     private static int getProjectViewOption() {
-        ViewObj viewObj = new ViewObj();
-        ControlObj controlObj = new ControlObj();
 
         boolean isProjectOptionSelected = false;
         int selectedProjectViewOption = 0;
@@ -218,8 +208,6 @@ public class ToDoApp {
 
     //Get the project indices entered by user
     private static List<Integer> getProjectIndices(TasksPool tasksPool) {
-        ViewObj viewObj = new ViewObj();
-        ControlObj controlObj = new ControlObj();
         boolean isProjectIndicesEntered = false;
         List<Integer> projectIndices = null;
         while (isProjectIndicesEntered == false) {
@@ -249,7 +237,6 @@ public class ToDoApp {
         boolean isOptionSelected = false;
         int selectedOption = 0;
         while (!isOptionSelected) {
-            ViewObj viewObj = new ViewObj();
             viewObj.display("Welcome to ToDo List application");
             viewObj.displayInstruction("Pick an option to open a file:");
             viewObj.display(1, "Open the recent Tasks file.");
@@ -258,7 +245,6 @@ public class ToDoApp {
             viewObj.display(0, "Escape ");
             viewObj.displayPrompt("Enter the selection number 1 or 2 or 3, and press return:");
 
-            ControlObj controlObj = new ControlObj();
             try {
                 selectedOption = controlObj.readCommandSelection(0,3);
                 isOptionSelected = true;
@@ -275,8 +261,6 @@ public class ToDoApp {
 
 
     public static TasksFile createTaskFile(int option) {
-        ViewObj viewObj = new ViewObj();
-        ControlObj controlObj = new ControlObj();
         TasksFile tasksFile = null;
         String tasksFileName = "";
         LogFile logFile = new LogFile("logDoc.log");
@@ -310,7 +294,6 @@ public class ToDoApp {
         if (TasksFile.exists(tasksFileName)){
             tasksFile = new TasksFile(tasksFileName);
         } else {
-            ViewObj viewObj = new ViewObj();
             viewObj.display("There is no recent tasks file in the log file, opening process is failed, you can rerun the application and select another option");
             tasksFile = null;
         }
@@ -322,8 +305,6 @@ public class ToDoApp {
 
     private static TasksFile openExistingTasksFile() {
         boolean selected = false;
-        ViewObj viewObj = new ViewObj();
-        ControlObj controlObj = new ControlObj();
         String tasksFileName = "";
         TasksFile tasksFile = null;
         while (!selected) {
@@ -345,8 +326,6 @@ public class ToDoApp {
     }
 
     private static TasksFile openNewTasksFile() {
-        ViewObj viewObj = new ViewObj();
-        ControlObj controlObj = new ControlObj();
         String tasksFileName = "";
         TasksFile tasksFile = null;
         boolean repeatedFileName = true;
