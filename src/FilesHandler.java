@@ -111,18 +111,27 @@ public class FilesHandler {
         this.fileName = aFileName;
     }
 
-    public static List<String> getListOfFiles() throws IOException {
+    public static List<String> getListOfFiles() {
         List <String> ListOfFiles;
         String currentDirectory = System.getProperty("user.dir");
-        ListOfFiles = Files.list(Paths.get(currentDirectory,"taskFiles")).map(Path::toString).collect(Collectors.toList());
 
-        List<String> ListOfFileNames = new ArrayList<>();
-        for (String aFilePath:
-                ListOfFiles) {
-            ListOfFileNames.add(Paths.get(aFilePath).getFileName().toString());
+        List<String> listOfFileNames = new ArrayList<>();
+
+        try {
+            ListOfFiles = Files.list(Paths.get(currentDirectory, "taskFiles")).map(Path::toString).collect(Collectors.toList());
+
+            for (String aFilePath :
+                    ListOfFiles) {
+                listOfFileNames.add(Paths.get(aFilePath).getFileName().toString());
+            }
+        } catch (IOException e) {
+            ViewObj viewObj = new ViewObj();
+            viewObj.display("FilesHandler.getListOfFiles"
+                            , "Failed to get the list of files in user directory", e);
+            listOfFileNames = null;
         }
 
-        return ListOfFileNames;
+        return listOfFileNames;
     }
 
     public static List<String> getListOfFiles(String fileExtent) {
