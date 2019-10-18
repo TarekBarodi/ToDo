@@ -1,3 +1,4 @@
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -117,10 +118,11 @@ public class ToDoApp {
                     viewObj.displayAllTasksInColumns(tasksListSortedByDueDate);
                 } else if (selectedDateViewOption == 2) {
                     //display the tasks due by today date
-                    viewObj.display("You can now view only the tasks due by today date.");
+                    viewObj.display("You can now view only the tasks due by today date "
+                            + new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
 
-                    //Get the date entered by user
-                    Date date = controlObj.readTaskDueDateFromTerminal();
+                    //Get the date of today
+                    Date date = new Date();
 
                     List<Task> tasksListBeforeADueDate = tasksPool.getTasksListBeforeADueDate(date);
                     viewObj.displayAllTasksInColumns(tasksListBeforeADueDate);
