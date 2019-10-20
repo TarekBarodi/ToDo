@@ -246,7 +246,7 @@ public class ToDoApp {
 
     public static int getOpenFileOption() {
         boolean isOpenFileOptionSelected = false;
-        int selectedOption = 0;
+        int selectedOpenFileOption = 0;
         while (!isOpenFileOptionSelected) {
             viewObj.display("Welcome to ToDo List application");
             viewObj.displayInstruction("Pick an option to open a file:");
@@ -257,7 +257,7 @@ public class ToDoApp {
             viewObj.displayPrompt("Enter the selection number 1 or 2 or 3, and press return:");
 
             try {
-                selectedOption = controlObj.readCommandSelection(0,3);
+                selectedOpenFileOption = controlObj.readCommandSelection(0,3);
                 isOpenFileOptionSelected = true;
             } catch (Exception e) {
                 viewObj.display("ToDoAp.selectOpenFileOption","Failed to select an option to open file",e);
@@ -266,7 +266,7 @@ public class ToDoApp {
 
 
         }
-        return selectedOption;
+        return selectedOpenFileOption;
     }
 
 
