@@ -146,10 +146,10 @@ public class ToDoApp {
     private static int getViewTasksByDueDateOption() {
         {
 
-            boolean isDateOptionSelected = false;
+            boolean isViewTasksByDueDateOptionSelected = false;
             int selectedDateViewOption = 0;
             // Loop until a valid option number entered by user
-            while (isDateOptionSelected == false) {
+            while (isViewTasksByDueDateOptionSelected == false) {
                 // display three options: all tasks sorted by due date, tasks due by today, tasks due by other date
                 viewObj.displayInstruction("Pick an option to view tasks by due date:");
                 viewObj.displayDateViewOptions();
@@ -159,7 +159,7 @@ public class ToDoApp {
                 selectedDateViewOption = controlObj.readCommandSelection(1, 3);
 
                 if (selectedDateViewOption >= 1 && selectedDateViewOption <=3) {
-                    isDateOptionSelected = true;
+                    isViewTasksByDueDateOptionSelected = true;
                 } else {
                     viewObj.display("Invalid entry, try again!");
                 }
