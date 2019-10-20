@@ -145,21 +145,21 @@ public class ToDoApp {
 
     private static int getViewTasksOption() {
 
-        int selectedViewOption = 0;
+        int selectedViewTasksOption = 0;
         //keep looping till the user enter a valid selection number
-        while (selectedViewOption == 0) { // continue looping until a proper number picked
+        while (selectedViewTasksOption == 0) { // continue looping until a proper number picked
             viewObj.displayInstruction("Pick an option to view the tasks:");
 
             // user will see the options: view all tasks, view by project, view by due date
             viewObj.displayTasksViewOptions();
 
-            // when the user make a selection, it will stored in selectedViewOption as int
+            // when the user make a selection, it will stored in selectedViewTasksOption as int
             viewObj.displayPrompt("Enter a number between 1 and 3:");
-            selectedViewOption = controlObj.readCommandSelection(1, 3);
+            selectedViewTasksOption = controlObj.readCommandSelection(1, 3);
 
-            viewObj.display((selectedViewOption == 0) ? "You have to enter a number between 1 and 3, please try again!" : "");
+            viewObj.display((selectedViewTasksOption == 0) ? "You have to enter a number between 1 and 3, please try again!" : "");
         }
-        return selectedViewOption;
+        return selectedViewTasksOption;
     }
 
     //Get project view option
