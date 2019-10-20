@@ -171,7 +171,7 @@ public class ToDoApp {
         while (isViewTasksByProjectOptionSelected == false) {
             // display two options: just press enter button or enter projects indices separated by commas
             viewObj.displayInstruction("Pick an option to view tasks by project:");
-            viewObj.displayProjectViewOptions();
+            viewObj.displayViewTasksByProjectOptions();
             viewObj.display("Enter a number either 1 or 2:");
 
             //read the user input

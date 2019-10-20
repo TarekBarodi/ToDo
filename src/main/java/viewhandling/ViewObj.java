@@ -98,7 +98,7 @@ public class ViewObj {
 
 
 
-    public void displayProjectViewOptions() {
+    public void displayViewTasksByProjectOptions() {
         display(1,"Show all tasks categorized by projects.");
         display(2,"Show only the tasks related to specific projects.");
     }
