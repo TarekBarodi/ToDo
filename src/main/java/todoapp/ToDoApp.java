@@ -245,9 +245,9 @@ public class ToDoApp {
 
 
     public static int getOpenFileOption() {
-        boolean isOptionSelected = false;
+        boolean isOpenFileOptionSelected = false;
         int selectedOption = 0;
-        while (!isOptionSelected) {
+        while (!isOpenFileOptionSelected) {
             viewObj.display("Welcome to ToDo List application");
             viewObj.displayInstruction("Pick an option to open a file:");
             viewObj.display(1, "Open the recent Tasks file.");
@@ -258,7 +258,7 @@ public class ToDoApp {
 
             try {
                 selectedOption = controlObj.readCommandSelection(0,3);
-                isOptionSelected = true;
+                isOpenFileOptionSelected = true;
             } catch (Exception e) {
                 viewObj.display("ToDoAp.selectOpenFileOption","Failed to select an option to open file",e);
                 return  -1;
