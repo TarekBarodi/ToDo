@@ -113,7 +113,7 @@ public class ToDoApp {
             case 3: // view by due date*/
                 //Get due date view option: view all tasks sorted by due date, view tasks due by today, view tasks due
                 //by certain date
-                int selectedDateViewOption = getDateViewOption();
+                int selectedDateViewOption = getViewTasksByDueDateOption();
 
                 //if option equals 1, then show all tasks sorted by due date
                 if (selectedDateViewOption == 1) {
@@ -143,7 +143,7 @@ public class ToDoApp {
 
     }
 
-    private static int getDateViewOption() {
+    private static int getViewTasksByDueDateOption() {
         {
 
             boolean isDateOptionSelected = false;
