@@ -36,22 +36,22 @@ public class ToDoApp {
             viewObj.displayTasksGeneralInfo(tasksPool);
 
             //a list of options to manage the tasks appear, so that the user can pick one of them
-            int selectedTasksOption = -1;
+            int selectedTasksManagementOption = -1;
 
             //looping till the user enter a valid number of option
-            while (selectedTasksOption == -1) {
+            while (selectedTasksManagementOption == -1) {
                 // user will see the option available to view, add, remove, edit a task or to quit
                 viewObj.displayInstruction("Pick an option:");
                 viewObj.displayTasksOptions();
                 viewObj.displayPrompt("Enter a number between 1 and 4:");
 
                 // user select an option to (1)view, (2)add, (3)remove, (4)edit a task or (0)quit
-                selectedTasksOption = controlObj.readCommandSelection(0, 4); // return -1 if no proper number selected
-                viewObj.display((selectedTasksOption == -1) ? "You have to enter a number between 0 and 4, please try again!" : "");
+                selectedTasksManagementOption = controlObj.readCommandSelection(0, 4); // return -1 if no proper number selected
+                viewObj.display((selectedTasksManagementOption == -1) ? "You have to enter a number between 0 and 4, please try again!" : "");
             }
 
             //the selected option specify the action to be executed regarding managing the tasks list
-            switch (selectedTasksOption) {
+            switch (selectedTasksManagementOption) {
                 case 0: // to quit
                     //just a goodbye message appear with no further action
                     viewObj.display("Thank You, Good Luck!");
