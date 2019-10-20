@@ -92,7 +92,7 @@ public class ToDoApp {
 
             case 2: // view by project
                 //Get project view option: view all categorized by project or view only related tasks for a project
-                int selectedProjectViewOption = getProjectViewOption();
+                int selectedProjectViewOption = getViewTasksByProjectOption();
 
                 //if option equals 1, then show all tasks categorized by projects
                 if (selectedProjectViewOption == 1) {
@@ -190,7 +190,7 @@ public class ToDoApp {
     }
 
     //Get project view option
-    private static int getProjectViewOption() {
+    private static int getViewTasksByProjectOption() {
 
         boolean isProjectOptionSelected = false;
         int selectedProjectViewOption = 0;
