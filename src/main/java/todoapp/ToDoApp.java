@@ -166,7 +166,7 @@ public class ToDoApp {
     private static int getViewTasksByProjectOption() {
 
         boolean isViewTasksByProjectOptionSelected = false;
-        int selectedProjectViewOption = 0;
+        int selectedViewTasksByProjectOption = 0;
         // Loop until a valid option number entered by user
         while (isViewTasksByProjectOptionSelected == false) {
             // display two options: just press enter button or enter projects indices separated by commas
@@ -175,15 +175,15 @@ public class ToDoApp {
             viewObj.display("Enter a number either 1 or 2:");
 
             //read the user input
-            selectedProjectViewOption = controlObj.readCommandSelection(1, 2);
+            selectedViewTasksByProjectOption = controlObj.readCommandSelection(1, 2);
 
-            if (selectedProjectViewOption == 1 | selectedProjectViewOption == 2) {
+            if (selectedViewTasksByProjectOption == 1 | selectedViewTasksByProjectOption == 2) {
                 isViewTasksByProjectOptionSelected = true;
             } else {
                 viewObj.display("Invalid entry, try again!");
             }
         }
-        return selectedProjectViewOption;
+        return selectedViewTasksByProjectOption;
     }
 
     private static int getViewTasksByDueDateOption() {
