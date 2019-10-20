@@ -113,13 +113,13 @@ public class ToDoApp {
             case 3: // view by due date*/
                 //Get due date view option: view all tasks sorted by due date, view tasks due by today, view tasks due
                 //by certain date
-                int selectedDateViewOption = getViewTasksByDueDateOption();
+                int selectedViewTasksByDueDateOption = getViewTasksByDueDateOption();
 
                 //if option equals 1, then show all tasks sorted by due date
-                if (selectedDateViewOption == 1) {
+                if (selectedViewTasksByDueDateOption == 1) {
                     List<Task> tasksListSortedByDueDate = tasksPool.getTasksListSortedByDueDate();
                     viewObj.displayAllTasksInColumns(tasksListSortedByDueDate);
-                } else if (selectedDateViewOption == 2) {
+                } else if (selectedViewTasksByDueDateOption == 2) {
                     //display the tasks due by today date
                     viewObj.display("You can now view only the tasks due by today date "
                             + new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
@@ -129,7 +129,7 @@ public class ToDoApp {
 
                     List<Task> tasksListBeforeADueDate = tasksPool.getTasksListBeforeADueDate(date);
                     viewObj.displayAllTasksInColumns(tasksListBeforeADueDate);
-                } else if (selectedDateViewOption == 3) {
+                } else if (selectedViewTasksByDueDateOption == 3) {
                     //display the tasks due by a specific date
                     viewObj.display("You can now view only the tasks due by the date you specify.");
 
