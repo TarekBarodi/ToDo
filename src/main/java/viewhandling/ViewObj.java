@@ -103,7 +103,7 @@ public class ViewObj {
         display(2,"Show only the tasks related to specific projects.");
     }
 
-    public void displayTasksOptions() {
+    public void displayTasksManagementOptions() {
         display(1, "View the tasks list");
         display(2, "Add new task");
         display(3, "Remove a task");

@@ -42,7 +42,7 @@ public class ToDoApp {
             while (selectedTasksManagementOption == -1) {
                 // user will see the option available to view, add, remove, edit a task or to quit
                 viewObj.displayInstruction("Pick an option:");
-                viewObj.displayTasksOptions();
+                viewObj.displayTasksManagementOptions();
                 viewObj.displayPrompt("Enter a number between 1 and 4:");
 
                 // user select an option to (1)view, (2)add, (3)remove, (4)edit a task or (0)quit
