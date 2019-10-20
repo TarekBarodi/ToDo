@@ -247,7 +247,7 @@ public class ViewObj {
 
     }
 
-    public void displayDateViewOptions() {
+    public void displayViewTasksByDueDateOptions() {
         display(1,"Show all tasks sorted by due dates.");
         display(2,"Show only the tasks which are due today");
         display(3,"Show only the tasks which are due by specific date");
