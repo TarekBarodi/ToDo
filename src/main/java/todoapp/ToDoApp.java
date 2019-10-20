@@ -19,7 +19,7 @@ public class ToDoApp {
 
     public static void main(String[] args) {
         // user select an option to open the Tasks File
-        int selectedOpenOption = getSelectedOpenFileOption();
+        int selectedOpenOption = getOpenFileOption();
 
         //Create a tasksFile depending on the option selected: 1 for recent, 2 for existing, 3 for new file.
         //including registering its path in the log file.
@@ -244,7 +244,7 @@ public class ToDoApp {
     }
 
 
-    public static int getSelectedOpenFileOption() {
+    public static int getOpenFileOption() {
         boolean isOptionSelected = false;
         int selectedOption = 0;
         while (!isOptionSelected) {
