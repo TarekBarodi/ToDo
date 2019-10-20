@@ -82,9 +82,9 @@ public class ToDoApp {
     public static void viewTasks(TasksPool tasksPool) {
 
         //get the option to how to view the tasks: view all, by project or by due date
-        int selectedViewOption = getViewTasksOption();
+        int selectedViewTasksOption = getViewTasksOption();
 
-        switch (selectedViewOption) {
+        switch (selectedViewTasksOption) {
             case 1: // view all tasks
                 viewObj.displayAsTitle("\nAll Tasks:");
                 viewObj.displayAllTasksInColumns(tasksPool.getTasksList());
