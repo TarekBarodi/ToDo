@@ -165,10 +165,10 @@ public class ToDoApp {
     //Get project view option
     private static int getViewTasksByProjectOption() {
 
-        boolean isProjectOptionSelected = false;
+        boolean isViewTasksByProjectOptionSelected = false;
         int selectedProjectViewOption = 0;
         // Loop until a valid option number entered by user
-        while (isProjectOptionSelected == false) {
+        while (isViewTasksByProjectOptionSelected == false) {
             // display two options: just press enter button or enter projects indices separated by commas
             viewObj.displayInstruction("Pick an option to view tasks by project:");
             viewObj.displayProjectViewOptions();
@@ -178,7 +178,7 @@ public class ToDoApp {
             selectedProjectViewOption = controlObj.readCommandSelection(1, 2);
 
             if (selectedProjectViewOption == 1 | selectedProjectViewOption == 2) {
-                isProjectOptionSelected = true;
+                isViewTasksByProjectOptionSelected = true;
             } else {
                 viewObj.display("Invalid entry, try again!");
             }
