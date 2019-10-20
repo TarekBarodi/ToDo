@@ -271,11 +271,11 @@ public class ToDoApp {
 
 
 
-    public static TasksFile createTaskFile(int option) {
+    public static TasksFile createTaskFile(int openFileOption) {
         TasksFile tasksFile = null;
         String tasksFileName = "";
         LogFile logFile = new LogFile("logDoc.log");
-        switch (option) {
+        switch (openFileOption) {
             case 0: // Escape
                 viewObj.display("Thank You, Good Luck!");
                 break;
