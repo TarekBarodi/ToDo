@@ -362,40 +362,6 @@ public class ToDoApp {
         }
     }
 
-    public String colorTxt(TxtColor txtColor, String txt){
-        String index = null;
-
-        switch (txtColor){
-            case BLACK:
-                index = "30";
-                break;
-            case RED:
-                index = "31";
-                break;
-            case GREEN:
-                index = "32";
-                break;
-            case YELLOW:
-                index = "33";
-                break;
-            case BLUE:
-                index = "34";
-                break;
-            case MAGENTA:
-                index = "35";
-                break;
-            case CYAN:
-                index = "36";
-                break;
-            case WHITE:
-                index = "37";
-                break;
-        }
-
-        return "\u001B[" + index + "m" + txt + "\u001B[" + 0 + "m";
-
-    }
-
 }
 
 
