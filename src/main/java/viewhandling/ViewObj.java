@@ -116,7 +116,7 @@ public class ViewObj {
                 + tasksPool.getCountOfDoneTask() + " tasks done.");
     }
 
-    public void displayTasksViewOptions() {
+    public void displayViewTasksOptions() {
         display(1, "View All");
         display(2, "View by project");
         display(3, "View by due date");

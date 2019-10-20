@@ -151,7 +151,7 @@ public class ToDoApp {
             viewObj.displayInstruction("Pick an option to view the tasks:");
 
             // user will see the options: view all tasks, view by project, view by due date
-            viewObj.displayTasksViewOptions();
+            viewObj.displayViewTasksOptions();
 
             // when the user make a selection, it will stored in selectedViewTasksOption as int
             viewObj.displayPrompt("Enter a number between 1 and 3:");
