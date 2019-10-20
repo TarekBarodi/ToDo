@@ -143,33 +143,6 @@ public class ToDoApp {
 
     }
 
-    private static int getViewTasksByDueDateOption() {
-        {
-
-            boolean isViewTasksByDueDateOptionSelected = false;
-            int selectedViewTasksByDueDateOption = 0;
-            // Loop until a valid option number entered by user
-            while (isViewTasksByDueDateOptionSelected == false) {
-                // display three options: all tasks sorted by due date, tasks due by today, tasks due by other date
-                viewObj.displayInstruction("Pick an option to view tasks by due date:");
-                viewObj.displayViewTasksByDueDateOptions();
-                viewObj.display("Enter a number between 1 and 3:");
-
-                //read the user input
-                selectedViewTasksByDueDateOption = controlObj.readCommandSelection(1, 3);
-
-                if (selectedViewTasksByDueDateOption >= 1 && selectedViewTasksByDueDateOption <=3) {
-                    isViewTasksByDueDateOptionSelected = true;
-                } else {
-                    viewObj.display("Invalid entry, try again!");
-                }
-            }
-            return selectedViewTasksByDueDateOption;
-        }
-
-
-    }
-
     private static int getViewTasksOption() {
 
         int selectedViewOption = 0;
@@ -212,6 +185,37 @@ public class ToDoApp {
         }
         return selectedProjectViewOption;
     }
+
+    private static int getViewTasksByDueDateOption() {
+        {
+
+            boolean isViewTasksByDueDateOptionSelected = false;
+            int selectedViewTasksByDueDateOption = 0;
+            // Loop until a valid option number entered by user
+            while (isViewTasksByDueDateOptionSelected == false) {
+                // display three options: all tasks sorted by due date, tasks due by today, tasks due by other date
+                viewObj.displayInstruction("Pick an option to view tasks by due date:");
+                viewObj.displayViewTasksByDueDateOptions();
+                viewObj.display("Enter a number between 1 and 3:");
+
+                //read the user input
+                selectedViewTasksByDueDateOption = controlObj.readCommandSelection(1, 3);
+
+                if (selectedViewTasksByDueDateOption >= 1 && selectedViewTasksByDueDateOption <=3) {
+                    isViewTasksByDueDateOptionSelected = true;
+                } else {
+                    viewObj.display("Invalid entry, try again!");
+                }
+            }
+            return selectedViewTasksByDueDateOption;
+        }
+
+
+    }
+
+
+
+
 
     //Get the project indices entered by user
     private static List<Integer> getProjectIndices(TasksPool tasksPool) {
