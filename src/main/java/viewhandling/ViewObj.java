@@ -235,7 +235,7 @@ public class ViewObj {
 
     }
 
-    public void displayAllTasksByProjects(TasksPool tasksPool) {
+    public void displayAllTasksCategorizedByProject(TasksPool tasksPool) {
         List<Integer> projectIndices = new ArrayList<>();
         int projectsListSize = tasksPool.getProjects().size();
 

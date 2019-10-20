@@ -96,7 +96,7 @@ public class ToDoApp {
 
                 //if option equals 1, then show all tasks categorized by projects
                 if (selectedViewTasksByProjectOption == 1) {
-                    viewObj.displayAllTasksByProjects(tasksPool);
+                    viewObj.displayAllTasksCategorizedByProject(tasksPool);
 
                     //if option equals 2, then show only the tasks related to some projects
                 } else if (selectedViewTasksByProjectOption == 2) {
