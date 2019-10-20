@@ -147,7 +147,7 @@ public class ToDoApp {
         {
 
             boolean isViewTasksByDueDateOptionSelected = false;
-            int selectedDateViewOption = 0;
+            int selectedViewTasksByDueDateOption = 0;
             // Loop until a valid option number entered by user
             while (isViewTasksByDueDateOptionSelected == false) {
                 // display three options: all tasks sorted by due date, tasks due by today, tasks due by other date
@@ -156,15 +156,15 @@ public class ToDoApp {
                 viewObj.display("Enter a number between 1 and 3:");
 
                 //read the user input
-                selectedDateViewOption = controlObj.readCommandSelection(1, 3);
+                selectedViewTasksByDueDateOption = controlObj.readCommandSelection(1, 3);
 
-                if (selectedDateViewOption >= 1 && selectedDateViewOption <=3) {
+                if (selectedViewTasksByDueDateOption >= 1 && selectedViewTasksByDueDateOption <=3) {
                     isViewTasksByDueDateOptionSelected = true;
                 } else {
                     viewObj.display("Invalid entry, try again!");
                 }
             }
-            return selectedDateViewOption;
+            return selectedViewTasksByDueDateOption;
         }
 
 
