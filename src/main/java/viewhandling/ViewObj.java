@@ -103,13 +103,6 @@ public class ViewObj {
         display(2,"Show only the tasks related to specific projects.");
     }
 
-    public void displayTasksManagementOptions() {
-        display(1, "View the tasks list");
-        display(2, "Add new task");
-        display(3, "Remove a task");
-        display(4, "Edit a task");
-        display(0, "Quit");
-    }
 
     public void displayOptions(Options options){
         switch (options){
@@ -147,11 +140,6 @@ public class ViewObj {
                 + tasksPool.getCountOfDoneTask() + " tasks done.");
     }
 
-    public void displayViewTasksOptions() {
-        display(1, "View All");
-        display(2, "View by project");
-        display(3, "View by due date");
-    }
 
     public void displayAllTasks(TasksPool tasksPool) {
         List<Task> tasks = tasksPool.getTasksList();

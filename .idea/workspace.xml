@@ -4,7 +4,9 @@
     <list default="true" id="3342bdce-1b6c-4595-ac83-41f51b5e3c69" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/todoapp/ToDoApp.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/todoapp/ToDoApp.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/viewhandling/ViewObj.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/viewhandling/ViewObj.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/todoapp/ToDoApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/todoapp/ToDoApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/viewhandling/ViewObj.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/viewhandling/ViewObj.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

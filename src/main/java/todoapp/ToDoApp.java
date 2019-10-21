@@ -42,7 +42,8 @@ public class ToDoApp {
             while (selectedTasksManagementOption == -1) {
                 // user will see the option available to view, add, remove, edit a task or to quit
                 viewObj.displayInstruction("Pick an option:");
-                viewObj.displayTasksManagementOptions();
+                viewObj.displayOptions(Options.tasksManagementOptions);
+
                 viewObj.displayPrompt("Enter a number between 1 and 4:");
 
                 // user select an option to (1)view, (2)add, (3)remove, (4)edit a task or (0)quit
@@ -172,7 +173,8 @@ public class ToDoApp {
         while (isViewTasksByProjectOptionSelected == false) {
             // display two options: just press enter button or enter projects indices separated by commas
             viewObj.displayInstruction("Pick an option to view tasks by project:");
-            viewObj.displayViewTasksByProjectOptions();
+            viewObj.displayOptions(Options.ViewTasksByProjectOption);
+
             viewObj.display("Enter a number either 1 or 2:");
 
             //read the user input
