@@ -250,10 +250,8 @@ public class ToDoApp {
         while (!isOpenFileOptionSelected) {
             viewObj.display("Welcome to ToDo List application");
             viewObj.displayInstruction("Pick an option to open a file:");
-            viewObj.display(1, "Open the recent Tasks file.");
-            viewObj.display(2, "Open an existing Tasks file.");
-            viewObj.display(3, "Open a new Tasks file.");
-            viewObj.display(0, "Escape ");
+            viewObj.displayOptions(Options.openFileOptions);
+
             viewObj.displayPrompt("Enter the selection number 1 or 2 or 3, and press return:");
 
             try {
