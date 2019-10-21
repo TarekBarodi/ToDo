@@ -98,12 +98,6 @@ public class ViewObj {
 
 
 
-    public void displayViewTasksByProjectOptions() {
-        display(1,"Show all tasks categorized by projects.");
-        display(2,"Show only the tasks related to specific projects.");
-    }
-
-
     public void displayOptions(Options options){
         switch (options){
             case openFileOptions:
@@ -266,10 +260,6 @@ public class ViewObj {
 
     }
 
-    public void displayViewTasksByDueDateOptions() {
-        display(1,"Show all tasks sorted by due dates.");
-        display(2,"Show only the tasks which are due today");
-        display(3,"Show only the tasks which are due by specific date");
-    }
+
 
 }

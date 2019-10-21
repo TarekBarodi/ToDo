@@ -198,7 +198,8 @@ public class ToDoApp {
             while (isViewTasksByDueDateOptionSelected == false) {
                 // display three options: all tasks sorted by due date, tasks due by today, tasks due by other date
                 viewObj.displayInstruction("Pick an option to view tasks by due date:");
-                viewObj.displayViewTasksByDueDateOptions();
+                viewObj.displayOptions(Options.viewTasksByDueDateOption);
+
                 viewObj.display("Enter a number between 1 and 3:");
 
                 //read the user input
