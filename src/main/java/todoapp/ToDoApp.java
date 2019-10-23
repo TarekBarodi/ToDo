@@ -19,11 +19,11 @@ public class ToDoApp {
 
     public static void main(String[] args) {
         // user select an option to open the Tasks File
-        int selectedOpenOption = selectOpenFileOption();
+        int selectedOpenFileOption = getOpenFileOption();
 
         //Create a tasksFile depending on the option selected: 1 for recent, 2 for existing, 3 for new file.
         //including registering its path in the log file.
-        TasksFile tasksFile = createTaskFile(selectedOpenOption);
+        TasksFile tasksFile = createTaskFile(selectedOpenFileOption);
 
         if (tasksFile != null) {
 
@@ -36,22 +36,22 @@ public class ToDoApp {
             viewObj.displayTasksGeneralInfo(tasksPool);
 
             //a list of options to manage the tasks appear, so that the user can pick one of them
-            int selectedTasksOption = -1;
+            int selectedTasksManagementOption = -1;
 
             //looping till the user enter a valid number of option
-            while (selectedTasksOption == -1) {
+            while (selectedTasksManagementOption == -1) {
                 // user will see the option available to view, add, remove, edit a task or to quit
                 viewObj.displayInstruction("Pick an option:");
-                viewObj.displayTasksOptions();
+                viewObj.displayTasksManagementOptions();
                 viewObj.displayPrompt("Enter a number between 1 and 4:");
 
                 // user select an option to (1)view, (2)add, (3)remove, (4)edit a task or (0)quit
-                selectedTasksOption = controlObj.readCommandSelection(0, 4); // return -1 if no proper number selected
-                viewObj.display((selectedTasksOption == -1) ? "You have to enter a number between 0 and 4, please try again!" : "");
+                selectedTasksManagementOption = controlObj.readCommandSelection(0, 4); // return -1 if no proper number selected
+                viewObj.display((selectedTasksManagementOption == -1) ? "You have to enter a number between 0 and 4, please try again!" : "");
             }
 
             //the selected option specify the action to be executed regarding managing the tasks list
-            switch (selectedTasksOption) {
+            switch (selectedTasksManagementOption) {
                 case 0: // to quit
                     //just a goodbye message appear with no further action
                     viewObj.display("Thank You, Good Luck!");
@@ -82,9 +82,9 @@ public class ToDoApp {
     public static void viewTasks(TasksPool tasksPool) {
 
         //get the option to how to view the tasks: view all, by project or by due date
-        int selectedViewOption = getViewTasksOption();
+        int selectedViewTasksOption = getViewTasksOption();
 
-        switch (selectedViewOption) {
+        switch (selectedViewTasksOption) {
             case 1: // view all tasks
                 viewObj.displayAsTitle("\nAll Tasks:");
                 viewObj.displayAllTasksInColumns(tasksPool.getTasksList());
@@ -92,14 +92,14 @@ public class ToDoApp {
 
             case 2: // view by project
                 //Get project view option: view all categorized by project or view only related tasks for a project
-                int selectedProjectViewOption = getProjectViewOption();
+                int selectedViewTasksByProjectOption = getViewTasksByProjectOption();
 
                 //if option equals 1, then show all tasks categorized by projects
-                if (selectedProjectViewOption == 1) {
-                    viewObj.displayAllTasksByProjects(tasksPool);
+                if (selectedViewTasksByProjectOption == 1) {
+                    viewObj.displayAllTasksCategorizedByProject(tasksPool);
 
                     //if option equals 2, then show only the tasks related to some projects
-                } else if (selectedProjectViewOption == 2) {
+                } else if (selectedViewTasksByProjectOption == 2) {
                     //display the tasks categorized and sorted by projects
                     viewObj.display("You can now view only the tasks related to the projects you select.");
 
@@ -113,13 +113,13 @@ public class ToDoApp {
             case 3: // view by due date*/
                 //Get due date view option: view all tasks sorted by due date, view tasks due by today, view tasks due
                 //by certain date
-                int selectedDateViewOption = getDateViewOption();
+                int selectedViewTasksByDueDateOption = getViewTasksByDueDateOption();
 
                 //if option equals 1, then show all tasks sorted by due date
-                if (selectedDateViewOption == 1) {
+                if (selectedViewTasksByDueDateOption == 1) {
                     List<Task> tasksListSortedByDueDate = tasksPool.getTasksListSortedByDueDate();
                     viewObj.displayAllTasksInColumns(tasksListSortedByDueDate);
-                } else if (selectedDateViewOption == 2) {
+                } else if (selectedViewTasksByDueDateOption == 2) {
                     //display the tasks due by today date
                     viewObj.display("You can now view only the tasks due by today date "
                             + new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
@@ -129,7 +129,7 @@ public class ToDoApp {
 
                     List<Task> tasksListBeforeADueDate = tasksPool.getTasksListBeforeADueDate(date);
                     viewObj.displayAllTasksInColumns(tasksListBeforeADueDate);
-                } else if (selectedDateViewOption == 3) {
+                } else if (selectedViewTasksByDueDateOption == 3) {
                     //display the tasks due by a specific date
                     viewObj.display("You can now view only the tasks due by the date you specify.");
 
@@ -143,75 +143,79 @@ public class ToDoApp {
 
     }
 
-    private static int getDateViewOption() {
-        {
-
-            boolean isDateOptionSelected = false;
-            int selectedDateViewOption = 0;
-            // Loop until a valid option number entered by user
-            while (isDateOptionSelected == false) {
-                // display three options: all tasks sorted by due date, tasks due by today, tasks due by other date
-                viewObj.displayInstruction("Pick an option to view tasks by due date:");
-                viewObj.displayDateViewOptions();
-                viewObj.display("Enter a number between 1 and 3:");
-
-                //read the user input
-                selectedDateViewOption = controlObj.readCommandSelection(1, 3);
-
-                if (selectedDateViewOption >= 1 && selectedDateViewOption <=3) {
-                    isDateOptionSelected = true;
-                } else {
-                    viewObj.display("Invalid entry, try again!");
-                }
-            }
-            return selectedDateViewOption;
-        }
-
-
-    }
-
     private static int getViewTasksOption() {
 
-        int selectedViewOption = 0;
+        int selectedViewTasksOption = 0;
         //keep looping till the user enter a valid selection number
-        while (selectedViewOption == 0) { // continue looping until a proper number picked
+        while (selectedViewTasksOption == 0) { // continue looping until a proper number picked
             viewObj.displayInstruction("Pick an option to view the tasks:");
 
             // user will see the options: view all tasks, view by project, view by due date
-            viewObj.displayTasksViewOptions();
+            viewObj.displayViewTasksOptions();
 
-            // when the user make a selection, it will stored in selectedViewOption as int
+            // when the user make a selection, it will stored in selectedViewTasksOption as int
             viewObj.displayPrompt("Enter a number between 1 and 3:");
-            selectedViewOption = controlObj.readCommandSelection(1, 3);
+            selectedViewTasksOption = controlObj.readCommandSelection(1, 3);
 
-            viewObj.display((selectedViewOption == 0) ? "You have to enter a number between 1 and 3, please try again!" : "");
+            viewObj.display((selectedViewTasksOption == 0) ? "You have to enter a number between 1 and 3, please try again!" : "");
         }
-        return selectedViewOption;
+        return selectedViewTasksOption;
     }
 
     //Get project view option
-    private static int getProjectViewOption() {
+    private static int getViewTasksByProjectOption() {
 
-        boolean isProjectOptionSelected = false;
-        int selectedProjectViewOption = 0;
+        boolean isViewTasksByProjectOptionSelected = false;
+        int selectedViewTasksByProjectOption = 0;
         // Loop until a valid option number entered by user
-        while (isProjectOptionSelected == false) {
+        while (isViewTasksByProjectOptionSelected == false) {
             // display two options: just press enter button or enter projects indices separated by commas
             viewObj.displayInstruction("Pick an option to view tasks by project:");
-            viewObj.displayProjectViewOptions();
+            viewObj.displayViewTasksByProjectOptions();
             viewObj.display("Enter a number either 1 or 2:");
 
             //read the user input
-            selectedProjectViewOption = controlObj.readCommandSelection(1, 2);
+            selectedViewTasksByProjectOption = controlObj.readCommandSelection(1, 2);
 
-            if (selectedProjectViewOption == 1 | selectedProjectViewOption == 2) {
-                isProjectOptionSelected = true;
+            if (selectedViewTasksByProjectOption == 1 | selectedViewTasksByProjectOption == 2) {
+                isViewTasksByProjectOptionSelected = true;
             } else {
                 viewObj.display("Invalid entry, try again!");
             }
         }
-        return selectedProjectViewOption;
+        return selectedViewTasksByProjectOption;
     }
+
+    private static int getViewTasksByDueDateOption() {
+        {
+
+            boolean isViewTasksByDueDateOptionSelected = false;
+            int selectedViewTasksByDueDateOption = 0;
+            // Loop until a valid option number entered by user
+            while (isViewTasksByDueDateOptionSelected == false) {
+                // display three options: all tasks sorted by due date, tasks due by today, tasks due by other date
+                viewObj.displayInstruction("Pick an option to view tasks by due date:");
+                viewObj.displayViewTasksByDueDateOptions();
+                viewObj.display("Enter a number between 1 and 3:");
+
+                //read the user input
+                selectedViewTasksByDueDateOption = controlObj.readCommandSelection(1, 3);
+
+                if (selectedViewTasksByDueDateOption >= 1 && selectedViewTasksByDueDateOption <=3) {
+                    isViewTasksByDueDateOptionSelected = true;
+                } else {
+                    viewObj.display("Invalid entry, try again!");
+                }
+            }
+            return selectedViewTasksByDueDateOption;
+        }
+
+
+    }
+
+
+
+
 
     //Get the project indices entered by user
     private static List<Integer> getProjectIndices(TasksPool tasksPool) {
@@ -240,10 +244,10 @@ public class ToDoApp {
     }
 
 
-    public static int selectOpenFileOption() {
-        boolean isOptionSelected = false;
-        int selectedOption = 0;
-        while (!isOptionSelected) {
+    public static int getOpenFileOption() {
+        boolean isOpenFileOptionSelected = false;
+        int selectedOpenFileOption = 0;
+        while (!isOpenFileOptionSelected) {
             viewObj.display("Welcome to ToDo List application");
             viewObj.displayInstruction("Pick an option to open a file:");
             viewObj.display(1, "Open the recent Tasks file.");
@@ -253,8 +257,8 @@ public class ToDoApp {
             viewObj.displayPrompt("Enter the selection number 1 or 2 or 3, and press return:");
 
             try {
-                selectedOption = controlObj.readCommandSelection(0,3);
-                isOptionSelected = true;
+                selectedOpenFileOption = controlObj.readCommandSelection(0,3);
+                isOpenFileOptionSelected = true;
             } catch (Exception e) {
                 viewObj.display("ToDoAp.selectOpenFileOption","Failed to select an option to open file",e);
                 return  -1;
@@ -262,16 +266,16 @@ public class ToDoApp {
 
 
         }
-        return selectedOption;
+        return selectedOpenFileOption;
     }
 
 
 
-    public static TasksFile createTaskFile(int option) {
+    public static TasksFile createTaskFile(int openFileOption) {
         TasksFile tasksFile = null;
         String tasksFileName = "";
         LogFile logFile = new LogFile("logDoc.log");
-        switch (option) {
+        switch (openFileOption) {
             case 0: // Escape
                 viewObj.display("Thank You, Good Luck!");
                 break;
@@ -356,40 +360,6 @@ public class ToDoApp {
         } catch (Exception e) {
             return false;
         }
-    }
-
-    public String colorTxt(TxtColor txtColor, String txt){
-        String index = null;
-
-        switch (txtColor){
-            case BLACK:
-                index = "30";
-                break;
-            case RED:
-                index = "31";
-                break;
-            case GREEN:
-                index = "32";
-                break;
-            case YELLOW:
-                index = "33";
-                break;
-            case BLUE:
-                index = "34";
-                break;
-            case MAGENTA:
-                index = "35";
-                break;
-            case CYAN:
-                index = "36";
-                break;
-            case WHITE:
-                index = "37";
-                break;
-        }
-
-        return "\u001B[" + index + "m" + txt + "\u001B[" + 0 + "m";
-
     }
 
 }

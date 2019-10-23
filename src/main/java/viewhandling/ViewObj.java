@@ -98,12 +98,12 @@ public class ViewObj {
 
 
 
-    public void displayProjectViewOptions() {
+    public void displayViewTasksByProjectOptions() {
         display(1,"Show all tasks categorized by projects.");
         display(2,"Show only the tasks related to specific projects.");
     }
 
-    public void displayTasksOptions() {
+    public void displayTasksManagementOptions() {
         display(1, "View the tasks list");
         display(2, "Add new task");
         display(3, "Remove a task");
@@ -116,7 +116,7 @@ public class ViewObj {
                 + tasksPool.getCountOfDoneTask() + " tasks done.");
     }
 
-    public void displayTasksViewOptions() {
+    public void displayViewTasksOptions() {
         display(1, "View All");
         display(2, "View by project");
         display(3, "View by due date");
@@ -235,7 +235,7 @@ public class ViewObj {
 
     }
 
-    public void displayAllTasksByProjects(TasksPool tasksPool) {
+    public void displayAllTasksCategorizedByProject(TasksPool tasksPool) {
         List<Integer> projectIndices = new ArrayList<>();
         int projectsListSize = tasksPool.getProjects().size();
 
@@ -247,7 +247,7 @@ public class ViewObj {
 
     }
 
-    public void displayDateViewOptions() {
+    public void displayViewTasksByDueDateOptions() {
         display(1,"Show all tasks sorted by due dates.");
         display(2,"Show only the tasks which are due today");
         display(3,"Show only the tasks which are due by specific date");
