@@ -1,6 +1,10 @@
-.DS_Store
 /.gradle/
-/build/
 /.idea/
-/.gradle/5.2.1/executionHistory/
-.gradle/5.2.1/executionHistory/executionHistory.bin
+/build/
+/gradle/
+/.gitignore
+/build.gradle
+/gradlew
+/gradlew.bat
+/settings.gradle
+/.DS_Store

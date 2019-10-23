@@ -46,7 +46,19 @@ public class Task {
         return listOfFields;
     }
 
+    public String toString(){
+        return title + "\t" + getCreatedDateAsString() + "\t" + getDueDateAsString() + "\t" + project + "\t" + status;
+    }
 
+    private String getDueDateAsString() {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        return dateFormat.format(dueDate);
+    }
+
+    private String getCreatedDateAsString() {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        return dateFormat.format(createdDate);
+    }
 
 
     public void setTitle(String title){

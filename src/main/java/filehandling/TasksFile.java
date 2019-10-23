@@ -6,6 +6,7 @@ import viewhandling.*;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -70,6 +71,26 @@ public class TasksFile extends FilesHandler {
         //Implementation required
     }
 
+    public void updateTasks(TasksPool tasksPool) {
+        List<Task> tasksList = tasksPool.getTasksList();
+
+        try {
+
+            if (Files.isWritable(Paths.get(filePath))) {
+                Files.write(Paths.get(filePath), "".getBytes());
+                for (Task task:tasksList) {
+                    Files.write(Paths.get(filePath), (task.toString() + "\n").getBytes(), StandardOpenOption.APPEND);
+                }
+            } else {
+                throw new IOException("The tasks file is uneditable");
+            }
+
+        } catch (IOException e){
+            ViewObj viewObj = new ViewObj();
+            viewObj.display("TasksFile.updateTasks","Failed to write to the log file.",e);
+        }
+
+    }
 }
 
 

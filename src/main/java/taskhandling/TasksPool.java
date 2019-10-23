@@ -102,7 +102,7 @@ public class TasksPool {
     }
 
 
-    public List<Integer> cleanProjectIndices(List<Integer> projectIndices) {
+    public List<Integer> cleanProjectsIndices(List<Integer> projectIndices) {
         int size = projects.size();
 
         // Check if all projectIndices withing the size of the projectsList, Eliminate all out of index numbers
@@ -127,6 +127,32 @@ public class TasksPool {
 
     }
 
+
+    public List<Integer> cleanTasksIndices(List<Integer> tasksIndices) {
+        int size = tasksList.size();
+
+        // Check if all tasksIndices withing the size of the tasksList, Eliminate all out of index numbers
+        //sorting tasksIndices list
+        Collections.sort(tasksIndices);
+
+        //Remove all tasksIndices values greater than size of tasksList or less than or equals zero
+        //case 1: taskIndex > tasksList size
+        //  taskIndex [1 - number of tasks]
+        //case 2: taskIndex <= 0
+        Iterator<Integer> it = tasksIndices.iterator();
+        //iterate over all items in tasksIndices
+        while (it.hasNext()) {
+            Integer taskIndex = it.next();
+            //compare taskIndex
+            if (taskIndex > size || taskIndex <= 0) {
+                it.remove();
+            }
+        }
+
+        return tasksIndices;
+
+    }
+
     public List<Task> getTasksListSortedByDueDate() {
         List<Task> tasksListSortedByDueDate = new ArrayList<>(tasksList);
 
@@ -141,5 +167,39 @@ public class TasksPool {
         getTasksListBeforeADueDate.removeIf(p -> p.getDueDate().after(date));
 
         return getTasksListBeforeADueDate;
+    }
+
+    public List<Task> getTasksByIndices(List<Integer> tasksIndices){
+        //Make a list of the tasks as per the tasksIndices
+        List<Task> tasksByIndices = new ArrayList<>();
+        for (Integer index:tasksIndices) {
+            tasksByIndices.add(tasksList.get(index-1));
+        }
+
+        return tasksByIndices;
+    }
+
+    public void removeTasksByIndices(List<Integer> tasksIndices) {
+        //Make a list of the tasks to be removed, this list is used to figure out which tasks to be removed from the
+        //master list of the tasks (tasksList)
+        List<Task> tasksToRemove = new ArrayList<>();
+        for (Integer index:tasksIndices) {
+            tasksToRemove.add(tasksList.get(index-1));
+        }
+
+        //Here we have one iterator which is looping only one time over the tasksList. In the same time there is another
+        //loop over the tasks to remove, and this will be one time also.
+        //We assume that there is no repetition of the tasks in tasksList.
+        Iterator<Task> it = tasksList.iterator();
+        for (Task task:tasksToRemove){
+            boolean found = false;
+            while (it.hasNext() && !found){
+                if (it.next() == task) {
+                    it.remove();
+                    found = true;
+                }
+            }
+        }
+
     }
 }

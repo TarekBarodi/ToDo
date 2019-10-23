@@ -75,7 +75,9 @@ public class ControlObj {
         viewObj.display("Please insert the fields required for the Task.");
 
         // get the task title
-        task.setTitle(readTaskTitleFromTerminal());
+        String taskTitle = readTaskTitleFromTerminal();
+        task.setTitle(taskTitle);
+
 
         // get the due date
         task.setDueDate(readTaskDueDateFromTerminal());
@@ -161,8 +163,19 @@ public class ControlObj {
     private String readTaskTitleFromTerminal() {
         ViewObj viewObj = new ViewObj();
         Scanner scanner = new Scanner(System.in);
-        viewObj.display("Enter the task title:");
-        return scanner.nextLine();
+
+        String taskTitle = "";
+        boolean isValidTaskTitle = false;
+        while (!isValidTaskTitle) {
+            viewObj.display("Enter the task title:");
+            taskTitle = scanner.nextLine();
+            if (taskTitle.matches("^[a-zA-Z0-9\\s]+$")){
+                isValidTaskTitle = true;
+            } else {
+                viewObj.display("Invalid title! write a-z letters lower/uppercase, numbers!");
+            }
+        }
+        return taskTitle;
     }
 
     public List<Integer> readProjectsIndices() {
@@ -182,5 +195,62 @@ public class ControlObj {
 
         return projectsIndices;
 
+    }
+
+    public List<Integer> readTasksIndices() {
+        List<Integer> tasksIndices = new ArrayList<>();
+        Scanner scanner = new Scanner(System.in);
+
+        if (scanner.hasNextLine()) {
+            String wholeLine = scanner.nextLine();
+            wholeLine = wholeLine.replaceAll("\\s+","");
+
+            scanner = new Scanner(wholeLine);
+            scanner.useDelimiter(",");
+            while (scanner.hasNextInt()) {
+                tasksIndices.add(scanner.nextInt());
+            }
+        }
+
+        return tasksIndices;
+
+    }
+
+    public boolean readYesNo() {
+        String yesOrNoAnswer = "";
+        Scanner scanner = new Scanner(System.in);
+        try {
+            String line = scanner.nextLine();
+            line = line.trim();
+            scanner = new Scanner(line);
+            yesOrNoAnswer = scanner.next();
+        } catch (Exception e) {
+            yesOrNoAnswer = "";
+        }
+
+        if (yesOrNoAnswer.equalsIgnoreCase("y")){
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    public String getTitleKeyword() {
+        ViewObj viewObj = new ViewObj();
+        Scanner scanner = new Scanner(System.in);
+
+        String titleKeyword = "";
+        boolean isValidTitleKeyword = false;
+        while (!isValidTitleKeyword) {
+            viewObj.display("Enter the keyword of task title:");
+            titleKeyword = scanner.nextLine();
+            if (titleKeyword.matches("^[a-zA-Z0-9\\s]+$")){
+                isValidTitleKeyword = true;
+            } else {
+                viewObj.display("Invalid keyword! write a-z letters lower/uppercase, numbers!");
+            }
+        }
+        return titleKeyword;
     }
 }

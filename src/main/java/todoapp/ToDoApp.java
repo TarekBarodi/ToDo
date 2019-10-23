@@ -6,6 +6,7 @@ import userinputhandling.*;
 import viewhandling.*;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -18,13 +19,16 @@ public class ToDoApp {
     }
 
     public static void main(String[] args) {
-        // user select an option to open the Tasks File
-        int selectedOpenFileOption = getOpenFileOption();
+        //Open a tasks file
+        TasksFile tasksFile = openTasksFile();
 
-        //Create a tasksFile depending on the option selected: 1 for recent, 2 for existing, 3 for new file.
-        //including registering its path in the log file.
-        TasksFile tasksFile = createTaskFile(selectedOpenFileOption);
+        //Manage tasks
+        manageTasks(tasksFile);
 
+
+    }
+
+    private static void manageTasks(TasksFile tasksFile) {
         if (tasksFile != null) {
 
             // read all tasks in the task file in the device and store as a tasks list in tasksPool object.
@@ -55,40 +59,207 @@ public class ToDoApp {
             switch (selectedTasksManagementOption) {
                 case 0: // to quit
                     //just a goodbye message appear with no further action
-                    viewObj.display("Thank You, Good Luck!");
+                    quit();
+
                     break;
                 case 1: // view tasks
                     //Viewing tasks has more options encapsulated in viewTasks method.
-                    viewObj.displayAsTitle("VIEW THE TASKS LIST");
                     viewTasks(tasksPool);
+
                     break;
                 case 2: // add task
-                    Task task = controlObj.readTask(tasksPool.getProjects());
-                    //Adding tasks has more options encapsulated in addTasks method.
-                    //addTasks();
+                    //Add the tasks one by one according to the user input
+                    addTasks(tasksPool);
+
                     break;
                 case 3: // remove task
+                    removeTasks(tasksPool);
+
+
                     break;
                 case 4: // edit task
 
             }
         }
-
-       /* //try code
-        for (int i=0; i<5; ++i) {
-            Task task = controlObj.readTask(tasksPool.projects);
-            tasksPool.addTask(task);*/
     }
 
-    public static void viewTasks(TasksPool tasksPool) {
+    private static void removeTasks(TasksPool tasksPool) {
+        //Display the options to remove tasks
+        viewObj.displayInstruction("Pick an option to remove some tasks:");
+        viewObj.displayOptions(Options.removeOptions);
+        viewObj.displayPrompt("Enter a number either 1 or 2:");
 
+        //Get the selected remove option from the user
+        int selectedRemoveOption = controlObj.readCommandSelection(1,2);
+        List<Integer> tasksIndices = null;
+        List<Task> tasksToRemove = null;
+        boolean isConfirmed = false;
+        switch (selectedRemoveOption) {
+            case 1:
+                //Display all tasks and get the tasks indices from the user
+                viewObj.displayInstruction("Pick one or more tasks to be removed,");
+                tasksIndices = getTasksIndices(tasksPool);
+
+                //Display the tasks to remove
+                viewObj.display("You are going to remove the following tasks:");
+                tasksToRemove = tasksPool.getTasksByIndices(tasksIndices);
+                viewObj.displayAllTasksInColumns(tasksToRemove);
+
+                //Get the user confirmation to remove the tasks
+                viewObj.displayConfirmRequest();
+                isConfirmed =  controlObj.readYesNo();
+
+                if (isConfirmed) {
+                    //Remove the selected tasks from tasksPool
+                    tasksPool.removeTasksByIndices(tasksIndices);
+
+                    //Update the tasksFile with the updated tasksPool
+                    tasksPool.getTasksFile().updateTasks(tasksPool);
+                } else {
+                    viewObj.display("You have not confirmed the removal, tasks list is kept the same!");
+                }
+
+                //Asking the user if he want to remove more tasks, if not return to the main menu
+                viewObj.display("Would you like to remove more tasks? (Y/N");
+                if (controlObj.readYesNo()) {
+                    removeTasks(tasksPool);
+                } else {
+                    manageTasks(tasksPool.getTasksFile());
+                }
+
+                break;
+
+            case 2: //Lookup the tasks using keywords of tasks titles
+                //Get the tasks indices of which their titles contain the keyword entered by user
+                viewObj.displayInstruction("Write a keyword to lookup the tasks which their titles match!");
+                String keyword = controlObj.getTitleKeyword();
+                tasksIndices = getTasksIndicesMatchTitleKeyword(tasksPool, keyword);
+
+                //Display the tasks to remove
+                viewObj.display("You are going to remove the following tasks:");
+                tasksToRemove = tasksPool.getTasksByIndices(tasksIndices);
+                viewObj.displayAllTasksInColumns(tasksToRemove);
+
+                //Get the user confirmation to remove the tasks
+                viewObj.displayConfirmRequest();
+                isConfirmed =  controlObj.readYesNo();
+
+                if (isConfirmed) {
+                    //Remove the selected tasks from tasksPool
+                    tasksPool.removeTasksByIndices(tasksIndices);
+
+                    //Update the tasksFile with the updated tasksPool
+                    tasksPool.getTasksFile().updateTasks(tasksPool);
+                } else {
+                    viewObj.display("You have not confirmed the removal, tasks list is kept the same!");
+                }
+
+                //Asking the user if he want to remove more tasks, if not return to the main menu
+                viewObj.display("Would you like to remove more tasks? (Y/N");
+                if (controlObj.readYesNo()) {
+                    removeTasks(tasksPool);
+                } else {
+                    manageTasks(tasksPool.getTasksFile());
+                }
+
+
+    }
+
+}
+
+    private static List<Integer> getTasksIndicesMatchTitleKeyword(TasksPool tasksPool, String keyword) {
+        List<Integer> tasksIndices = new ArrayList<>();
+        List<Task> tasksList = tasksPool.getTasksList();
+        for (int i = 0; i < tasksList.size(); i++){
+            Task task = tasksList.get(i);
+            if (task.getTitle().contains(keyword)){
+                tasksIndices.add((Integer)(i+1));
+            }
+        }
+
+        return tasksIndices;
+    }
+
+    private static void addTasks(TasksPool tasksPool) {
+        //Read the task from console as the user enter the required data
+        Task task = controlObj.readTask(tasksPool.getProjects());
+
+        //This is adding the task to the tasks list and its project to the projects list in the tasksPool
+        tasksPool.addTask(task);
+
+        //Update the tasksFile with the updated tasksPool
+        tasksPool.getTasksFile().updateTasks(tasksPool);
+
+        //Asking the user to add one more task
+        viewObj.display("Do you would like to add one more task?");
+        viewObj.displayConfirmRequest();
+        boolean isConfirmed = controlObj.readYesNo();
+
+        if (isConfirmed){
+            addTasks(tasksPool);
+        } else {
+            manageTasks(tasksPool.getTasksFile());
+        }
+    }
+
+    private static void quit() {
+        viewObj.display("Thank You, Good Luck!");
+    }
+
+    private static TasksFile openTasksFile() {
+        // user select an option to open the Tasks File
+        int selectedOpenFileOption = getOpenFileOption();
+
+        //Create a tasksFile depending on the option selected: 1 for recent, 2 for existing, 3 for new file.
+        //including registering its path in the log file.
+        TasksFile tasksFile = createTaskFile(selectedOpenFileOption);
+
+        return tasksFile;
+    }
+
+    private static List<Integer> getTasksIndices(TasksPool tasksPool) {
+        boolean isTasksIndicesEntered = false;
+        List<Integer> tasksIndices = null;
+        while (isTasksIndicesEntered == false) {
+            viewObj.display("You have the following tasks:");
+            viewObj.displayAllTasksInColumns(tasksPool.getTasksList());
+            viewObj.displayPrompt("Enter the indices of the tasks separated by commas:");
+
+            //get the tasks indices entered by user as a list of integers
+            tasksIndices = controlObj.readTasksIndices();
+
+            //clean tasksIndices: remove all invalid indices: <= 0 and > projectsCounting
+            tasksIndices = tasksPool.cleanTasksIndices(tasksIndices);
+
+            //If the tasksIndices still empty then display a message and keep isTasksIndicesEntered
+            //false to keep looping in while body until the user enter a valid entry
+            if (tasksIndices.isEmpty()) {
+                viewObj.display("Invalid entry, try again!");
+            } else {
+                isTasksIndicesEntered = true;
+            }
+        }
+        return tasksIndices;
+    }
+
+
+    public static void viewTasks(TasksPool tasksPool) {
         //get the option to how to view the tasks: view all, by project or by due date
+        viewObj.displayAsTitle("VIEW THE TASKS LIST");
         int selectedViewTasksOption = getViewTasksOption();
 
         switch (selectedViewTasksOption) {
             case 1: // view all tasks
                 viewObj.displayAsTitle("\nAll Tasks:");
                 viewObj.displayAllTasksInColumns(tasksPool.getTasksList());
+
+                //Asking the user if he want to view more tasks, if not return to the main menu
+                viewObj.display("Would you like to return to View Tasks Options? (Y/N)");
+                if (controlObj.readYesNo()) {
+                    viewTasks(tasksPool);
+                } else {
+                    manageTasks(tasksPool.getTasksFile());
+                }
                 break;
 
             case 2: // view by project
@@ -108,6 +279,14 @@ public class ToDoApp {
                     List<Integer> projectIndices = getProjectIndices(tasksPool);
 
                     viewObj.displayTasksByProjects(tasksPool, projectIndices);
+                }
+
+                //Asking the user if he want to view more tasks, if not return to the main menu
+                viewObj.display("Would you like to return to View Tasks Options? (Y/N)");
+                if (controlObj.readYesNo()) {
+                    viewTasks(tasksPool);
+                } else {
+                    manageTasks(tasksPool.getTasksFile());
                 }
 
                 break;
@@ -139,6 +318,14 @@ public class ToDoApp {
 
                     List<Task> tasksListBeforeADueDate = tasksPool.getTasksListBeforeADueDate(date);
                     viewObj.displayAllTasksInColumns(tasksListBeforeADueDate);
+                }
+
+                //Asking the user if he want to view more tasks, if not return to the main menu
+                viewObj.display("Would you like to return to View Tasks Options? (Y/N)");
+                if (controlObj.readYesNo()) {
+                    viewTasks(tasksPool);
+                } else {
+                    manageTasks(tasksPool.getTasksFile());
                 }
         }
 
@@ -234,7 +421,7 @@ public class ToDoApp {
             projectIndices = controlObj.readProjectsIndices();
 
             //clean projectIndices: remove all invalid indices: <= 0 and > projectsCounting
-            projectIndices = tasksPool.cleanProjectIndices(projectIndices);
+            projectIndices = tasksPool.cleanProjectsIndices(projectIndices);
 
             //If the projectIndices still empty then display a message and keep isProjectIndicesEntered
             //false to keep looping in while body until the user enter a valid entry
