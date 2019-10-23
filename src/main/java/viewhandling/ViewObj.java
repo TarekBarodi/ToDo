@@ -126,6 +126,10 @@ public class ViewObj {
                 display(1,"Show all tasks sorted by due dates.");
                 display(2,"Show only the tasks which are due today");
                 display(3,"Show only the tasks which are due by specific date");
+                break;
+            case removeOptions:
+                display(1,"Show all tasks to pick the ones to be removed");
+                display(2,"Lookup the tasks to be removed by a keyword");
         }
     }
 
@@ -261,5 +265,7 @@ public class ViewObj {
     }
 
 
-
+    public void displayConfirmRequest() {
+        displayPrompt("Confirm the order? (Y/N):");
+    }
 }

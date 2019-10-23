@@ -2,8 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3342bdce-1b6c-4595-ac83-41f51b5e3c69" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/filehandling/TasksFile.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/filehandling/TasksFile.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/taskhandling/Task.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/taskhandling/Task.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/taskhandling/TasksPool.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/taskhandling/TasksPool.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/todoapp/ToDoApp.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/todoapp/ToDoApp.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/userinputhandling/ControlObj.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/userinputhandling/ControlObj.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/viewhandling/ViewObj$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/viewhandling/ViewObj$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/viewhandling/ViewObj.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/viewhandling/ViewObj.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/filehandling/TasksFile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/filehandling/TasksFile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/taskhandling/Task.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/taskhandling/Task.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/taskhandling/TasksPool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/taskhandling/TasksPool.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/todoapp/ToDoApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/todoapp/ToDoApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/userinputhandling/ControlObj.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/userinputhandling/ControlObj.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/viewhandling/Options.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/viewhandling/Options.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/viewhandling/ViewObj.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/viewhandling/ViewObj.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/taskFiles/ddd.tsk" beforeDir="false" afterPath="$PROJECT_DIR$/taskFiles/ddd.tsk" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -103,5 +118,26 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/taskhandling/Task.java</url>
+          <line>49</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/taskhandling/TasksPool.java</url>
+          <line>184</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/todoapp/ToDoApp.java</url>
+          <line>135</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

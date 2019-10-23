@@ -6,4 +6,5 @@ public enum Options {
     ViewTasksOption,
     ViewTasksByProjectOption,
     viewTasksByDueDateOption,
+    removeOptions,
 }
