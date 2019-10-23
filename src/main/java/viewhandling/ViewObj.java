@@ -98,17 +98,35 @@ public class ViewObj {
 
 
 
-    public void displayViewTasksByProjectOptions() {
-        display(1,"Show all tasks categorized by projects.");
-        display(2,"Show only the tasks related to specific projects.");
-    }
-
-    public void displayTasksManagementOptions() {
-        display(1, "View the tasks list");
-        display(2, "Add new task");
-        display(3, "Remove a task");
-        display(4, "Edit a task");
-        display(0, "Quit");
+    public void displayOptions(Options options){
+        switch (options){
+            case openFileOptions:
+                display(1, "Open the recent Tasks file.");
+                display(2, "Open an existing Tasks file.");
+                display(3, "Open a new Tasks file.");
+                display(0, "Quit");
+                break;
+            case tasksManagementOptions:
+                display(1, "View the tasks list");
+                display(2, "Add new task");
+                display(3, "Remove a task");
+                display(4, "Edit a task");
+                display(0, "Quit");
+                break;
+            case ViewTasksOption:
+                display(1, "View All");
+                display(2, "View by project");
+                display(3, "View by due date");
+                break;
+            case ViewTasksByProjectOption:
+                display(1,"Show all tasks categorized by projects.");
+                display(2,"Show only the tasks related to specific projects.");
+                break;
+            case viewTasksByDueDateOption:
+                display(1,"Show all tasks sorted by due dates.");
+                display(2,"Show only the tasks which are due today");
+                display(3,"Show only the tasks which are due by specific date");
+        }
     }
 
     public void displayTasksGeneralInfo(TasksPool tasksPool) {
@@ -116,11 +134,6 @@ public class ViewObj {
                 + tasksPool.getCountOfDoneTask() + " tasks done.");
     }
 
-    public void displayViewTasksOptions() {
-        display(1, "View All");
-        display(2, "View by project");
-        display(3, "View by due date");
-    }
 
     public void displayAllTasks(TasksPool tasksPool) {
         List<Task> tasks = tasksPool.getTasksList();
@@ -247,10 +260,6 @@ public class ViewObj {
 
     }
 
-    public void displayViewTasksByDueDateOptions() {
-        display(1,"Show all tasks sorted by due dates.");
-        display(2,"Show only the tasks which are due today");
-        display(3,"Show only the tasks which are due by specific date");
-    }
+
 
 }

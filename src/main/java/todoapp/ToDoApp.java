@@ -42,7 +42,8 @@ public class ToDoApp {
             while (selectedTasksManagementOption == -1) {
                 // user will see the option available to view, add, remove, edit a task or to quit
                 viewObj.displayInstruction("Pick an option:");
-                viewObj.displayTasksManagementOptions();
+                viewObj.displayOptions(Options.tasksManagementOptions);
+
                 viewObj.displayPrompt("Enter a number between 1 and 4:");
 
                 // user select an option to (1)view, (2)add, (3)remove, (4)edit a task or (0)quit
@@ -151,7 +152,8 @@ public class ToDoApp {
             viewObj.displayInstruction("Pick an option to view the tasks:");
 
             // user will see the options: view all tasks, view by project, view by due date
-            viewObj.displayViewTasksOptions();
+            viewObj.displayOptions(Options.ViewTasksOption);
+
 
             // when the user make a selection, it will stored in selectedViewTasksOption as int
             viewObj.displayPrompt("Enter a number between 1 and 3:");
@@ -171,7 +173,8 @@ public class ToDoApp {
         while (isViewTasksByProjectOptionSelected == false) {
             // display two options: just press enter button or enter projects indices separated by commas
             viewObj.displayInstruction("Pick an option to view tasks by project:");
-            viewObj.displayViewTasksByProjectOptions();
+            viewObj.displayOptions(Options.ViewTasksByProjectOption);
+
             viewObj.display("Enter a number either 1 or 2:");
 
             //read the user input
@@ -195,7 +198,8 @@ public class ToDoApp {
             while (isViewTasksByDueDateOptionSelected == false) {
                 // display three options: all tasks sorted by due date, tasks due by today, tasks due by other date
                 viewObj.displayInstruction("Pick an option to view tasks by due date:");
-                viewObj.displayViewTasksByDueDateOptions();
+                viewObj.displayOptions(Options.viewTasksByDueDateOption);
+
                 viewObj.display("Enter a number between 1 and 3:");
 
                 //read the user input
@@ -250,10 +254,8 @@ public class ToDoApp {
         while (!isOpenFileOptionSelected) {
             viewObj.display("Welcome to ToDo List application");
             viewObj.displayInstruction("Pick an option to open a file:");
-            viewObj.display(1, "Open the recent Tasks file.");
-            viewObj.display(2, "Open an existing Tasks file.");
-            viewObj.display(3, "Open a new Tasks file.");
-            viewObj.display(0, "Escape ");
+            viewObj.displayOptions(Options.openFileOptions);
+
             viewObj.displayPrompt("Enter the selection number 1 or 2 or 3, and press return:");
 
             try {
